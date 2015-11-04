@@ -1,0 +1,6 @@
+{
+    "directory": "djangobucketlist/bucketlist/static/lib",
+    "analytics": false,
+    "timeout": 120000,
+    "interactive": false
+}

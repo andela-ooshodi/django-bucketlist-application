@@ -1,0 +1,21 @@
+{
+  "name": "Bucketlist",
+  "description": "Django Powered Bucketlist Application",
+  "version": "1.0.0",
+  "main": "manage.py",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andela-ooshodi/django-bucketlist-application"
+  },
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

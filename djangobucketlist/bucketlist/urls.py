@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^login$', views.LoginView.as_view(), name='login'),
     url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'^register$', views.RegistrationView.as_view(), name='register'),
-    url(r'^home$', views.HomeView.as_view(), name='home'),
+    url(r'^bucketlist/(?P<username>\w+)$', views.BucketListView.as_view(), name='bucketlist'),
 ]

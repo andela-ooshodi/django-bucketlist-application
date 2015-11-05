@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.template import RequestContext
 
-from bucketlist.forms import LoginForm, RegistrationForm
+from bucketlist.forms_authentication import LoginForm, RegistrationForm
+from bucketlist.forms_buckets import BucketListForm, BucketlistItemForm
 
 
 class IndexView(TemplateView):
@@ -33,7 +34,7 @@ class LoginView(IndexView):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect("/home")
+                    return redirect("/bucketlist/" + self.request.user.username)
             else:
                 messages.add_message(
                     request, messages.ERROR, 'Incorrect username or password!')
@@ -57,12 +58,23 @@ class RegistrationView(IndexView):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password'])
             login(request, new_user)
-            return redirect("/home")
+            return redirect("/bucketlist/" + self.request.user.username)
         else:
             context = super(RegistrationView, self).get_context_data(**kwargs)
             context['registrationform'] = form
             return render(request, self.template_name, context)
 
 
-class HomeView(TemplateView):
-    template_name = 'bucketlist/home.html'
+class BucketListView(TemplateView):
+    template_name = 'bucketlist/bucketlist.html'
+    form_class = BucketListForm
+
+    def get_context_data(self, **kwargs):
+        context = super(BucketListView, self).get_context_data(**kwargs)
+        username = kwargs['username']
+        context['username'] = username
+        context['bucketlistform'] = BucketListForm()
+        return context
+
+class BucketItemView(TemplateView):
+    pass

@@ -5,7 +5,8 @@ Views for bucketlist app
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
-
+from django.contrib import messages
+from django.template import RequestContext
 
 from bucketlist.forms import LoginForm, RegistrationForm
 
@@ -34,9 +35,12 @@ class LoginView(IndexView):
                     login(request, user)
                     return redirect("/home")
             else:
-                context = super(LoginView, self).get_context_data(**kwargs)
-                context['loginform'] = form
-                return render(request, self.template_name, context)
+                messages.add_message(
+                    request, messages.ERROR, 'Incorrect username or password!')
+                return redirect(
+                    '/',
+                    context_instance=RequestContext(request)
+                )
         else:
             context = super(LoginView, self).get_context_data(**kwargs)
             context['loginform'] = form

@@ -16,7 +16,7 @@ class AuthenticationTestCase(StaticLiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_can_reach_index_page_and_log_in_and_logout(self):
+    def test_can_reach_index_page(self):
         self.browser.get(self.live_server_url)
 
         # asserting index page was successfully reached

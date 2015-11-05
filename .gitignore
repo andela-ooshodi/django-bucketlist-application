@@ -59,7 +59,7 @@ target/
 *.exe
 
 # development file
-djangobucketlist/settings/development.py
+djangobucketlist/djangobucketlist/settings/development.py
 
 # test db
-*.sqlite
+djangobucketlist/mydatabase

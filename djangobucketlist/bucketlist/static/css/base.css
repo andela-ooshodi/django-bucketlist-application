@@ -1,0 +1,19 @@
+body {
+  background: url("../img/bucket.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* index pade styling */
+.centered {
+  margin-top: 15%;
+}
+
+.copyright {
+  position : fixed;
+  bottom : 0;
+  right: 0;
+  clear: both;
+}

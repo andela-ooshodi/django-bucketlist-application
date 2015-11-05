@@ -1,3 +1,52 @@
 {% extends "bucketlist/base.html" %}
 
 {% block title %}Bucketlist Home{% endblock %}
+
+{% block body %}
+  <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+    <div class="content">
+      <div class="header">
+        <div class="row">
+          <h1 id="greeting-label">Hello {{ request.user.username }}</h1>
+          <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="row">
+          <h2>My bucketlists &nbsp;
+          <a href="#"><i class="mdi mdi-plus"></i></a>
+          </h2>
+        </div>
+        <div class="buckets well">
+          <ul class="list-group">
+            <li class="list-group-item">Cras justo odio
+              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
+              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a> 
+            </li>
+            <li class="list-group-item">Dapibus ac facilisis in
+              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
+              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a>
+            </li>
+            <li class="list-group-item">Morbi leo risus
+              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
+              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a>
+            </li>
+            <li class="list-group-item">Porta ac consectetur ac
+              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
+              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a>
+            </li>
+            <li class="list-group-item">Vestibulum at eros
+              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
+              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+
+
+{% endblock body %}

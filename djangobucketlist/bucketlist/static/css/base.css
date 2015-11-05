@@ -4,11 +4,17 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-default {
+  color: #6B6B6B;
 }
 
 /* index pade styling */
 .centered {
   margin-top: 15%;
+  color: #fff;
 }
 
 .copyright {
@@ -16,4 +22,51 @@ body {
   bottom : 0;
   right: 0;
   clear: both;
+}
+
+/* modal styling */
+.modal-content {
+  color: #6B6B6B;
+}
+
+/* home page content styling */
+.header {
+  margin-bottom: 50px;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px 10px 10px 10px;
+  margin: 20px 0px;
+  color: #6B6B6B;
+}
+
+.content .row {
+  margin: 0px 20px;
+}
+
+#greeting-label {
+  display: inline-block;
+}
+
+#logout {
+  margin-top: 20px;
+}
+
+.list-group {
+  margin-bottom: 0px;
+}
+.list-group i {
+  margin: 5px;
+}
+
+.well {
+  margin-top: 10px;
+}
+
+.bucket {
+  overflow: auto;
 }

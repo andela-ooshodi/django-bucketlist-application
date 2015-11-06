@@ -1,35 +1,35 @@
 {% extends "bucketlist/base.html" %}
 {% load bootstrap %}
 
-{% block title %}{{ request.user.username }}'s Bucketlist {% endblock %}
+{% block title %}Bucketlist: {{ name }}{% endblock %}
 
 {% block body %}
   <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
     <div class="content">
       <div class="header">
         <div class="row">
-          <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a>
-          <h1 id="name">Hello {{ request.user.username }}</h1>
+          <a class="pull-right" id="back" href="/bucketlist/{{ request.user.username }}"><i class="mdi mdi-arrow-left-bold-circle"></i></a>
+          <h2 id="name">{{ name }}</h2>   
         </div>
       </div>
       <div class="page-content">
         <div class="row">
-          <h2>My bucketlists &nbsp;
+          <h3>Items &nbsp;
           <a href="#bucketModal" data-toggle="modal"><i class="mdi mdi-plus"></i></a>
-          </h2>
+          </h3>
         </div>
-        <!-- bucketlist form modal -->
+        <!-- bucketitem form modal -->
         <div id="bucketModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">What are we doing next? &nbsp;<i class="mdi mdi-emoticon-happy"></i></h4>
+                <h4 class="modal-title text-center">Let's fill up our bucket &nbsp;<i class="mdi mdi-bitbucket"></i></h4>
               </div>
               <div class="modal-body">
-                <form role="form" action="bucketlist" method="post">
+                <form role="form" action="#" method="post">
                   {% csrf_token %}
-                  {{ bucketlistform|bootstrap }}
+                  {{ bucketitemform|bootstrap }}
                   <button type="submit" class="btn btn-default">Add</button>
                 </form>
               </div>
@@ -38,8 +38,8 @@
         </div>
         <div class="buckets well">
           <ul class="list-group">
-            {% for bucket in buckets %}
-            <li class="list-group-item">{{ bucket.name }}
+            {% for item in bucketitems %}
+            <li class="list-group-item">{{ item.name }}
               <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
               <a href="#"><i class="mdi mdi-pencil pull-right"></i></a> 
             </li>

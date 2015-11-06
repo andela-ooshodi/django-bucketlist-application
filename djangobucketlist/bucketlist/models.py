@@ -8,8 +8,10 @@ from django.contrib.auth.models import User
 
 class Base(models.Model):
     name = models.CharField(max_length=200)
-    date_created = models.DateTimeField('created')
-    date_modified = models.DateTimeField('modified')
+    date_created = models.DateTimeField(
+        auto_now_add=True, verbose_name='created')
+    date_modified = models.DateTimeField(
+        auto_now=True, verbose_name='modified')
 
     class Meta:
         abstract = True

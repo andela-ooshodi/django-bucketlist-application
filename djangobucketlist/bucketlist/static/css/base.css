@@ -48,7 +48,7 @@ body {
   margin: 0px 20px;
 }
 
-#greeting-label {
+#name {
   display: inline-block;
 }
 
@@ -56,9 +56,16 @@ body {
   margin-top: 20px;
 }
 
+#back {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
 .list-group {
   margin-bottom: 0px;
 }
+
 .list-group i {
   margin: 5px;
 }
@@ -69,4 +76,9 @@ body {
 
 .bucket {
   overflow: auto;
+}
+
+/* error page */
+#error-header {
+  margin-bottom: 40px;
 }

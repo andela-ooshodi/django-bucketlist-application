@@ -3,14 +3,17 @@ Views for bucketlist app
 """
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.template import RequestContext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from bucketlist.models import BucketList, BucketlistItem
 from bucketlist.forms_authentication import LoginForm, RegistrationForm
 from bucketlist.forms_buckets import BucketListForm, BucketlistItemForm
+import json
 
 
 class IndexView(TemplateView):
@@ -71,18 +74,37 @@ class RegistrationView(IndexView):
             return render(request, self.template_name, context)
 
 
-class BucketListView(TemplateView):
+class PaginationMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.page = request.GET.get('page')
+        return super(PaginationMixin, self).dispatch(request, *args, **kwargs)
+
+
+class BucketListView(PaginationMixin, TemplateView):
     template_name = 'bucketlist/bucketlist.html'
     form_class = BucketListForm
 
     def get_context_data(self, **kwargs):
+        buckets_list = BucketList.objects.filter(
+            author_id=self.request.user.id).order_by('-date_modified')
+
+        paginator = Paginator(buckets_list, 10)
+        try:
+            buckets = paginator.page(self.page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            buckets = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range
+            buckets = paginator.page(paginator.num_pages)
+
+        # get context
         context = super(BucketListView, self).get_context_data(**kwargs)
         username = kwargs['username']
         context['username'] = username
         context['bucketlistform'] = BucketListForm()
-        context['buckets'] = BucketList.objects.filter(
-            author_id=self.request.user.id).order_by('-date_modified')
-
+        context['buckets'] = buckets
         if username != self.request.user.username:
             self.template_name = 'bucketlist/errors.html'
 
@@ -96,23 +118,52 @@ class BucketListView(TemplateView):
         return redirect('/bucketlist/{}/bucketitem'.format(bucketlist.id))
 
 
-class BucketItemView(TemplateView):
+class BucketItemView(PaginationMixin, TemplateView):
     template_name = 'bucketlist/bucketitem.html'
     form_class = BucketlistItemForm
 
     def get_context_data(self, **kwargs):
         try:
+            bucketitems_list = BucketlistItem.objects.filter(
+                bucketlist_id=kwargs['bucketlistid'])
+            paginator = Paginator(bucketitems_list, 10)
+            try:
+                bucketitems = paginator.page(self.page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                bucketitems = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range
+                bucketitems = paginator.page(paginator.num_pages)
+
+            # get context
             context = super(BucketItemView, self).get_context_data(**kwargs)
             context['name'] = BucketList.objects.filter(
                 id=kwargs['bucketlistid'],
                 author_id=self.request.user.id)[0].name
-            context['bucketitems'] = BucketlistItem.objects.filter(
-                bucketlist_id=kwargs['bucketlistid'])
+            context['bucketitems'] = bucketitems
             context['bucketitemform'] = BucketlistItemForm()
+            context['bucketlistid'] = kwargs['bucketlistid']
         except IndexError:
             self.template_name = 'bucketlist/errors.html'
 
         return context
 
     def post(self, request, **kwargs):
-        pass
+        post_name = request.POST.get('the_post')
+        response_data = {}
+        bucketitem = BucketlistItem(
+            name=post_name,
+            bucketlist=BucketList.objects.get(
+                pk=kwargs['bucketlistid']))
+
+        bucketitem.save()
+        response_data['name'] = bucketitem.name
+        response_data['bucketlist'] = bucketitem.bucketlist_id
+        response_data['bucketpk'] = bucketitem.pk
+        response_data['done'] = bucketitem.done
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )

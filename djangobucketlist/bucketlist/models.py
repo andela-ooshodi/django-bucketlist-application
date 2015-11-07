@@ -26,7 +26,7 @@ class BucketList(Base):
 
 class BucketlistItem(Base):
     bucketlist = models.ForeignKey(BucketList)
-    done = models.BooleanField()
+    done = models.BooleanField(default=False)
 
     class Meta(Base.Meta):
         db_table = 'bucketitem'

@@ -17,6 +17,7 @@
           <h2>My bucketlists &nbsp;
           <a href="#bucketModal" data-toggle="modal"><i class="mdi mdi-plus"></i></a>
           </h2>
+          <hr>
         </div>
         <!-- bucketlist form modal -->
         <div id="bucketModal" class="modal fade" role="dialog">
@@ -27,7 +28,7 @@
                 <h4 class="modal-title text-center">What are we doing next? &nbsp;<i class="mdi mdi-emoticon-happy"></i></h4>
               </div>
               <div class="modal-body">
-                <form role="form" action="bucketlist" method="post">
+                <form role="form" action="{% url 'bucketlist' request.user.username %}" method="post">
                   {% csrf_token %}
                   {{ bucketlistform|bootstrap }}
                   <button type="submit" class="btn btn-default">Add</button>
@@ -41,7 +42,7 @@
             {% for bucket in buckets %}
             <li class="list-group-item">{{ bucket.name }}
               <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
-              <a href="#"><i class="mdi mdi-pencil pull-right"></i></a> 
+              <a href="{% url 'bucketitem' bucket.id  %}"><i class="mdi mdi-pencil pull-right"></i></a> 
             </li>
             {% endfor %}
           </ul>

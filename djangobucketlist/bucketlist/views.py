@@ -14,6 +14,7 @@ from bucketlist.models import BucketList, BucketlistItem
 from bucketlist.forms_authentication import LoginForm, RegistrationForm
 from bucketlist.forms_buckets import BucketListForm, BucketlistItemForm
 import json
+from datetime import datetime
 
 
 class IndexView(TemplateView):
@@ -86,10 +87,10 @@ class BucketListView(PaginationMixin, TemplateView):
     form_class = BucketListForm
 
     def get_context_data(self, **kwargs):
-        buckets_list = BucketList.objects.filter(
+        buckets_all = BucketList.objects.filter(
             author_id=self.request.user.id).order_by('-date_modified')
 
-        paginator = Paginator(buckets_list, 10)
+        paginator = Paginator(buckets_all, 10)
         try:
             buckets = paginator.page(self.page)
         except PageNotAnInteger:
@@ -117,6 +118,21 @@ class BucketListView(PaginationMixin, TemplateView):
         bucketlist.save()
         return redirect('/bucketlist/{}/bucketitem'.format(bucketlist.id))
 
+    def delete(self, request, **kwargs):
+        # import pdb; pdb.set_trace()
+        bucketlist = BucketList.objects.get(
+            pk=int(request.body.split('=')[1]))
+        bucketitems = BucketlistItem.objects.filter(
+            bucketlist_id=bucketlist.pk)
+
+        bucketlist.delete()
+        bucketitems.delete()
+
+        return HttpResponse(
+            json.dumps({'msg': 'success'}),
+            content_type="application/json"
+        )
+
 
 class BucketItemView(PaginationMixin, TemplateView):
     template_name = 'bucketlist/bucketitem.html'
@@ -124,9 +140,11 @@ class BucketItemView(PaginationMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         try:
-            bucketitems_list = BucketlistItem.objects.filter(
-                bucketlist_id=kwargs['bucketlistid'])
-            paginator = Paginator(bucketitems_list, 10)
+            bucketitems_all = BucketlistItem.objects.filter(
+                bucketlist_id=kwargs['bucketlistid']).order_by(
+                'done', '-date_modified',
+            )
+            paginator = Paginator(bucketitems_all, 10)
             try:
                 bucketitems = paginator.page(self.page)
             except PageNotAnInteger:
@@ -138,6 +156,8 @@ class BucketItemView(PaginationMixin, TemplateView):
 
             # get context
             context = super(BucketItemView, self).get_context_data(**kwargs)
+            # get the name of the bucketlist and check if it belongs to logged
+            # in user
             context['name'] = BucketList.objects.filter(
                 id=kwargs['bucketlistid'],
                 author_id=self.request.user.id)[0].name
@@ -150,20 +170,39 @@ class BucketItemView(PaginationMixin, TemplateView):
         return context
 
     def post(self, request, **kwargs):
-        post_name = request.POST.get('the_post')
-        response_data = {}
+        bucketitem_name = request.POST.get('the_item')
         bucketitem = BucketlistItem(
-            name=post_name,
+            name=bucketitem_name,
             bucketlist=BucketList.objects.get(
                 pk=kwargs['bucketlistid']))
 
         bucketitem.save()
-        response_data['name'] = bucketitem.name
-        response_data['bucketlist'] = bucketitem.bucketlist_id
-        response_data['bucketpk'] = bucketitem.pk
-        response_data['done'] = bucketitem.done
 
         return HttpResponse(
-            json.dumps(response_data),
+            json.dumps({'msg': 'success'}),
+            content_type="application/json"
+        )
+
+    def put(self, request, **kwargs):
+        bucketitem = BucketlistItem.objects.get(
+            pk=int(request.body.split('=')[1]))
+
+        bucketitem.done = False if bucketitem.done else True
+        bucketitem.date_modified = datetime.now
+        bucketitem.save()
+
+        return HttpResponse(
+            json.dumps({'msg': 'success'}),
+            content_type="application/json"
+        )
+
+    def delete(self, request, **kwargs):
+        bucketitem = BucketlistItem.objects.get(
+            pk=int(request.body.split('=')[1]))
+
+        bucketitem.delete()
+
+        return HttpResponse(
+            json.dumps({'msg': 'success'}),
             content_type="application/json"
         )

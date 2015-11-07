@@ -40,14 +40,13 @@
         <div class="buckets well">
           <ul class="list-group">
             {% for item in bucketitems %}
-            <li class="list-group-item">{{ item.name }}
-              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
-              <a href="#"><input class="pull-right" type="checkbox" value="">
-              </a> 
+            <li class="list-group-item item-{{ item.pk }}">{{ item.name }}
+              <a class="btn pull-right delete-item" id="delete-{{ item.pk }}-{{item.bucketlist_id}}"><i class="mdi mdi-close"></i></a>  
+              <input class="pull-right item-checkbox" id="edit-{{ item.pk }}-{{item.bucketlist_id}}" type="checkbox" {% if item.done %}checked{% endif %}>
             </li>
             {% endfor %}
           </ul>
-          <div class="pagination">
+          <div class="pagination col-centered">
             <span class="step-links">
               {% if bucketitems.has_previous %}
                 <a href="?page={{ bucketitems.previous_page_number }}">previous</a>

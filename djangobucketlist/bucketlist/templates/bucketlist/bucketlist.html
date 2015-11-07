@@ -40,9 +40,9 @@
         <div class="buckets well">
           <ul class="list-group">
             {% for bucket in buckets %}
-            <li class="list-group-item">{{ bucket.name }}
-              <a href="#"><i class="mdi mdi-close pull-right"></i></a>  
-              <a href="{% url 'bucketitem' bucket.id  %}"><i class="mdi mdi-pencil pull-right"></i></a> 
+            <li class="list-group-item bucket-{{ bucket.pk }}">{{ bucket.name }}
+              <a class="btn pull-right delete-list" id="delete-{{ bucket.pk }}"><i class="mdi mdi-close"></i></a>
+              <a href="{% url 'bucketitem' bucket.id  %}"><i class="mdi mdi-pencil pull-right edit"></i></a>
             </li>
             {% endfor %}
           </ul>

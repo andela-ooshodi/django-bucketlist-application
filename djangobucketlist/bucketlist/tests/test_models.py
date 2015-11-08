@@ -1,10 +1,11 @@
 """Test bucketlist models"""
+
 from django.test import TestCase
 from bucketlist.models import BucketList, BucketlistItem
 from django.contrib.auth.models import User
 
 
-class BucketModelsTestCase(TestCase):
+class BucketModelsTest(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(

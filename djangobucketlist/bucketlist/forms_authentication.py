@@ -24,7 +24,7 @@ class RegistrationForm(forms.Form):
                                widget=forms.PasswordInput(attrs={
                                    'placeholder': 'Create secret password'
                                }))
-    Verify_password = forms.CharField(label='Verify Password', max_length=100,
+    verify_password = forms.CharField(label='Verify Password', max_length=100,
                                       widget=forms.PasswordInput(attrs={
                                           'placeholder': 'Verify secret password'
                                       }))

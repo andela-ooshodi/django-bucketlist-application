@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
-                ('date_created', models.DateTimeField(verbose_name=b'created')),
-                ('date_modified', models.DateTimeField(verbose_name=b'modified')),
+                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name=b'created')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name=b'modified')),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
-                ('date_created', models.DateTimeField(verbose_name=b'created')),
-                ('date_modified', models.DateTimeField(verbose_name=b'modified')),
-                ('done', models.BooleanField()),
+                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name=b'created')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name=b'modified')),
+                ('done', models.BooleanField(default=False)),
                 ('bucketlist', models.ForeignKey(to='bucketlist.BucketList')),
             ],
             options={

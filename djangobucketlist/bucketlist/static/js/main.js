@@ -4,18 +4,17 @@ $(document).ready(function() {
     $('#bucketitem-form').on('submit', function(event) {
         event.preventDefault();
         var url = $(this).attr("action");
-        var data = {
-            'name': $('#id_name').val()
-        }
-        create_post(url, data);
+        // doesn't allow for posting empty bucketitem
+        var name = $('#id_name').val() ? $('#id_name').val() : undefined;
+        create_post(url, name);
     });
     // AJAX for creating bucketitems
-    function create_post(url, data) {
+    function create_post(url, name) {
         $.ajax({
             url: url,
             type: 'POST',
             data: {
-                the_item: $('#id_name').val()
+                name: name
             },
             // handle a successful response
             success: function(json) {
@@ -80,7 +79,7 @@ $(document).ready(function() {
                 itempk: item_pk
             },
             success: function(json) {
-                console.log('success');
+                $('body').load(document.URL);
             },
         });
     };

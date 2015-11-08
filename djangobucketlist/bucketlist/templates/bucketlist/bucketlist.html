@@ -17,7 +17,6 @@
           <h2>My bucketlists &nbsp;
           <a href="#bucketModal" data-toggle="modal"><i class="mdi mdi-plus"></i></a>
           </h2>
-          <hr>
         </div>
         <!-- bucketlist form modal -->
         <div id="bucketModal" class="modal fade" role="dialog">
@@ -44,8 +43,25 @@
               <a class="btn pull-right delete-list" id="delete-{{ bucket.pk }}"><i class="mdi mdi-close"></i></a>
               <a href="{% url 'bucketitem' bucket.id  %}"><i class="mdi mdi-pencil pull-right edit"></i></a>
             </li>
+            {% empty %}
+            <div class="alert alert-info">Let's add a new bucketlist, click the "&#43;" button to get started</div>
             {% endfor %}
           </ul>
+          <div class="pagination">
+            <span class="step-links">
+              {% if buckets.has_previous %}
+                <a href="?page={{ buckets.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
+              {% endif %}
+              {% if buckets.paginator.num_pages > 1 %}
+              <span class="current">
+                {{ buckets.number }} of {{ buckets.paginator.num_pages }}
+              </span>
+              {% endif %}
+              {% if buckets.has_next %}
+                <a href="?page={{ buckets.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
+              {% endif %}
+            </span>
+          </div>
         </div>
       </div>
     </div>

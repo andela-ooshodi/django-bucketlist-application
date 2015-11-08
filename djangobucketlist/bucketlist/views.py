@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from bucketlist.models import BucketList, BucketlistItem
 from bucketlist.forms_authentication import LoginForm, RegistrationForm
@@ -21,6 +23,7 @@ class IndexView(TemplateView):
     template_name = 'bucketlist/index.html'
 
     def dispatch(self, request, *args, **kwargs):
+        # redirect a user if already authenticated
         if request.user.is_authenticated():
             return redirect('/bucketlist/' + self.request.user.username)
         return super(IndexView, self).dispatch(request, *args, **kwargs)
@@ -75,29 +78,37 @@ class RegistrationView(IndexView):
             return render(request, self.template_name, context)
 
 
-class PaginationMixin(object):
+class LoginRequiredMixin(object):
+    # View mixin which requires that the user is authenticated.
+    @method_decorator(login_required(login_url='/'))
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
 
+
+class PaginationMixin(object):
+    # grabs the page number in a get query string
     def dispatch(self, request, *args, **kwargs):
         self.page = request.GET.get('page')
         return super(PaginationMixin, self).dispatch(request, *args, **kwargs)
 
 
-class BucketListView(PaginationMixin, TemplateView):
+class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
     template_name = 'bucketlist/bucketlist.html'
     form_class = BucketListForm
 
     def get_context_data(self, **kwargs):
         buckets_all = BucketList.objects.filter(
             author_id=self.request.user.id).order_by('-date_modified')
-
+        # limit the number of buckets per page to 10
         paginator = Paginator(buckets_all, 10)
         try:
             buckets = paginator.page(self.page)
         except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
+            # If page is not an integer, deliver the first page.
             buckets = paginator.page(1)
         except EmptyPage:
-            # If page is out of range
+            # If page is out of range, deliver the last page
             buckets = paginator.page(paginator.num_pages)
 
         # get context
@@ -107,19 +118,23 @@ class BucketListView(PaginationMixin, TemplateView):
         context['bucketlistform'] = BucketListForm()
         context['buckets'] = buckets
         if username != self.request.user.username:
+            # returns error if trying to access bucketlist not owned
             self.template_name = 'bucketlist/errors.html'
 
         return context
 
     def post(self, request, **kwargs):
-        form = self.form_class(request.POST)
-        bucketlist = form.save(commit=False)
-        bucketlist.author = self.request.user
-        bucketlist.save()
-        return redirect('/bucketlist/{}/bucketitem'.format(bucketlist.id))
+        try:
+            form = self.form_class(request.POST)
+            bucketlist = form.save(commit=False)
+            bucketlist.author = self.request.user
+            bucketlist.save()
+            return redirect('/bucketlist/{}/bucketitem'.format(bucketlist.id))
+        except ValueError:
+            # redirects to error page on adding an empty bucketlist
+            return render(request, 'bucketlist/errors.html')
 
     def delete(self, request, **kwargs):
-        # import pdb; pdb.set_trace()
         bucketlist = BucketList.objects.get(
             pk=int(request.body.split('=')[1]))
         bucketitems = BucketlistItem.objects.filter(
@@ -134,7 +149,7 @@ class BucketListView(PaginationMixin, TemplateView):
         )
 
 
-class BucketItemView(PaginationMixin, TemplateView):
+class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
     template_name = 'bucketlist/bucketitem.html'
     form_class = BucketlistItemForm
 
@@ -144,6 +159,7 @@ class BucketItemView(PaginationMixin, TemplateView):
                 bucketlist_id=kwargs['bucketlistid']).order_by(
                 'done', '-date_modified',
             )
+            # limit the number of bucketitems per page to 10
             paginator = Paginator(bucketitems_all, 10)
             try:
                 bucketitems = paginator.page(self.page)
@@ -151,7 +167,7 @@ class BucketItemView(PaginationMixin, TemplateView):
                 # If page is not an integer, deliver first page.
                 bucketitems = paginator.page(1)
             except EmptyPage:
-                # If page is out of range
+                # If page is out of range, deliver last page
                 bucketitems = paginator.page(paginator.num_pages)
 
             # get context
@@ -165,12 +181,13 @@ class BucketItemView(PaginationMixin, TemplateView):
             context['bucketitemform'] = BucketlistItemForm()
             context['bucketlistid'] = kwargs['bucketlistid']
         except IndexError:
+            # returns error if trying to access bucketitems not owned
             self.template_name = 'bucketlist/errors.html'
 
         return context
 
     def post(self, request, **kwargs):
-        bucketitem_name = request.POST.get('the_item')
+        bucketitem_name = request.POST.get('name')
         bucketitem = BucketlistItem(
             name=bucketitem_name,
             bucketlist=BucketList.objects.get(

@@ -37,6 +37,7 @@ body {
 .content {
   height: 100%;
   width: 100%;
+  background: url("../img/paper.jpg") no-repeat;
   background-color: #fff;
   border-radius: 8px;
   padding: 40px 10px 10px 10px;
@@ -66,12 +67,14 @@ body {
   margin-bottom: 0px;
 }
 
-.well {
-  margin-top: 10px;
+.list-group-item {
+  background-color: #F5F5F5;
+  border: none;
 }
 
 .buckets {
   overflow: auto;
+  margin-top: 10px;
 }
 
 .edit {
@@ -84,6 +87,11 @@ input[type="checkbox"] {
 
 .delete-item, .delete-list {
   padding: 0px;
+}
+
+.pagination {
+  width: 100%;
+  text-align: center;
 }
 
 /* error page */

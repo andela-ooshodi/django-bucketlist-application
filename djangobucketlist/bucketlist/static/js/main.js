@@ -60,7 +60,6 @@ $(document).ready(function() {
                 itempk: item_pk
             },
             success: function(json) {
-                $('.item-' + item_pk).hide();
                 $('#item-body').load(document.URL + " #item-body");
             },
         });
@@ -80,7 +79,6 @@ $(document).ready(function() {
                 listpk: list_pk
             },
             success: function(json) {
-                $('.bucket-' + list_pk).hide();
                 $('#bucket-body').load(document.URL + " #bucket-body");
             },
         });

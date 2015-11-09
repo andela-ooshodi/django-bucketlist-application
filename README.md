@@ -1,2 +1,2 @@
-# django-bucketlist-application
+# django-bucketlist-application [![Build Status](https://travis-ci.org/andela-ooshodi/django-bucketlist-application.svg?branch=master)](https://travis-ci.org/andela-ooshodi/django-bucketlist-application) [![Coverage Status](https://coveralls.io/repos/andela-ooshodi/django-bucketlist-application/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-ooshodi/django-bucketlist-application?branch=master)
 Django Bucketlist Application

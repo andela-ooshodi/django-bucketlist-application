@@ -20,12 +20,32 @@ $(document).ready(function() {
             success: function(json) {
                 $('#id_name').val('');
                 $('#bucketModal').modal('hide');
-                $('body').load(document.URL);
+                $('#item-body').load(document.URL + " #item-body");
+            },
+        });
+    };
+    // edit bucketitem
+    $('body').on('click','.item-checkbox', function(event) {
+        var id_attr = $(this).attr('id').split('-');
+        var item_pk = id_attr[1];
+        var item_bucket = id_attr[2];
+        edit_bucketitem(item_pk, item_bucket);
+    });
+    // AJAX for editing bucketitem
+    function edit_bucketitem(item_pk, item_bucket) {
+        $.ajax({
+            url: '/bucketlist/' + item_bucket + '/bucketitem',
+            type: 'PUT',
+            data: {
+                itempk: item_pk
+            },
+            success: function(json) {
+                $('#item-body').load(document.URL + " #item-body");
             },
         });
     };
     // delete bucketitem
-    $('.delete-item').on('click', function() {
+    $('body').on('click','.delete-item', function() {
         var id_attr = $(this).attr('id').split('-');
         var item_pk = id_attr[1];
         var item_bucket = id_attr[2];
@@ -41,11 +61,12 @@ $(document).ready(function() {
             },
             success: function(json) {
                 $('.item-' + item_pk).hide();
+                $('#item-body').load(document.URL + " #item-body");
             },
         });
     };
     // delete bucketlist
-    $('.delete-list').on('click', function() {
+    $('body').on('click', '.delete-list', function() {
         var list_pk = $(this).attr('id').split('-')[1];
         var user = $('#name').text().split(' ')[1];
         delete_bucketlist(list_pk, user);
@@ -60,26 +81,7 @@ $(document).ready(function() {
             },
             success: function(json) {
                 $('.bucket-' + list_pk).hide();
-            },
-        });
-    };
-    // edit bucketitem
-    $('.item-checkbox').on('click', function(event) {
-        var id_attr = $(this).attr('id').split('-');
-        var item_pk = id_attr[1];
-        var item_bucket = id_attr[2];
-        edit_bucketitem(item_pk, item_bucket);
-    });
-    // AJAX for editing bucketitem
-    function edit_bucketitem(item_pk, item_bucket) {
-        $.ajax({
-            url: '/bucketlist/' + item_bucket + '/bucketitem',
-            type: 'PUT',
-            data: {
-                itempk: item_pk
-            },
-            success: function(json) {
-                $('body').load(document.URL);
+                $('#bucket-body').load(document.URL + " #bucket-body");
             },
         });
     };

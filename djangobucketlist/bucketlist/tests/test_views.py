@@ -3,13 +3,16 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
     fixtures = ['users.json']
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.PhantomJS()
         self.browser.set_window_size(1400, 1000)
         self.browser.implicitly_wait(10)
 
@@ -26,6 +29,12 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         # asserting a successful login
         self.browser.find_element_by_xpath(
             "//button[contains(text(),'Get Started')]").click()
+        block = WebDriverWait(self.browser, 60)
+        block.until(
+            EC.visibility_of_element_located(
+                (By.CLASS_NAME, 'modal')
+            )
+        )
         self.browser.find_element_by_name('username').send_keys('laddeos')
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('laddeos')
@@ -35,6 +44,12 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
 
         # add a new bucketlist
         self.browser.find_element_by_id('add-list-icon').click()
+        block = WebDriverWait(self.browser, 60)
+        block.until(
+            EC.visibility_of_element_located(
+                (By.CLASS_NAME, 'modal')
+            )
+        )
         self.browser.find_element_by_name(
             'name').send_keys('A new bucketlist')
         self.browser.find_element_by_xpath(
@@ -44,6 +59,12 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
 
         # add a new bucketitem
         self.browser.find_element_by_id('add-item-icon').click()
+        block = WebDriverWait(self.browser, 60)
+        block.until(
+            EC.visibility_of_element_located(
+                (By.CLASS_NAME, 'modal')
+            )
+        )
         self.browser.find_element_by_name(
             'name').send_keys('A new bucketitem')
         self.browser.find_element_by_xpath(
@@ -52,18 +73,8 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('A new bucketitem', body.text)
 
-        # delete bucketitem
-        self.browser.find_element_by_class_name('delete-item').click()
-        body = self.browser.find_element_by_tag_name('body')
-        self.assertNotIn('A new bucketitem', body.text)
-
-        # delete bucketlist
-        self.browser.find_element_by_id('back').click()
-        self.browser.find_element_by_class_name('delete-list').click()
-        body = self.browser.find_element_by_tag_name('body')
-        self.assertNotIn('A new bucketlist', body.text)
-
         # assert successful logout
+        self.browser.find_element_by_id('back').click()
         self.browser.find_element_by_id('logout').click()
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('Welcome to myBucketlist', body.text)

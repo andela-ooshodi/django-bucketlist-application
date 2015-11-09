@@ -37,30 +37,32 @@
           </div>
         </div>
         <div class="buckets well">
-          <ul class="list-group">
-            {% for item in bucketitems %}
-            <li class="list-group-item item-{{ item.pk }}">{{ item.name }}
-              <a class="btn pull-right delete-item" id="delete-{{ item.pk }}-{{item.bucketlist_id}}"><i class="mdi mdi-close"></i></a>  
-              <input class="pull-right item-checkbox" id="edit-{{ item.pk }}-{{item.bucketlist_id}}" type="checkbox" {% if item.done %}checked{% endif %}>
-            </li>
-            {% empty %}
-            <div class="alert alert-info">Let's add a new item, click the "&#43;" button to get started</div>
-            {% endfor %}
-          </ul>
-          <div class="pagination">
-            <span class="step-links">
-              {% if bucketitems.has_previous %}
-                <a href="?page={{ bucketitems.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
-              {% endif %}
-              {% if bucketitems.paginator.num_pages > 1 %}
-              <span class="current">
-                {{ bucketitems.number }} of {{ bucketitems.paginator.num_pages }}
+          <div id="item-body">
+            <ul class="list-group">
+              {% for item in bucketitems %}
+              <li class="list-group-item item-{{ item.pk }}">{{ item.name }}
+                <a class="btn pull-right delete-item" id="delete-{{ item.pk }}-{{item.bucketlist_id}}"><i class="mdi mdi-close"></i></a>  
+                <input class="pull-right item-checkbox" id="edit-{{ item.pk }}-{{item.bucketlist_id}}" type="checkbox" {% if item.done %}checked{% endif %}>
+              </li>
+              {% empty %}
+              <div class="alert alert-info">Let's add a new item, click the "&#43;" button to get started</div>
+              {% endfor %}
+            </ul>
+            <div class="pagination">
+              <span class="step-links">
+                {% if bucketitems.has_previous %}
+                  <a href="?page={{ bucketitems.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
+                {% endif %}
+                {% if bucketitems.paginator.num_pages > 1 %}
+                <span class="current">
+                  {{ bucketitems.number }} of {{ bucketitems.paginator.num_pages }}
+                </span>
+                {% endif %}
+                {% if bucketitems.has_next %}
+                  <a href="?page={{ bucketitems.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
+                {% endif %}
               </span>
-              {% endif %}
-              {% if bucketitems.has_next %}
-                <a href="?page={{ bucketitems.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
-              {% endif %}
-            </span>
+            </div>
           </div>
         </div>
       </div>

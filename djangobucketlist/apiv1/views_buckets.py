@@ -4,6 +4,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import permissions
 
 
 class BucketListView(APIView):
@@ -11,10 +12,12 @@ class BucketListView(APIView):
     """
     List all buckets, or create a new bucket.
     """
-    # gets all buckets from the database
+    # requires authentication
+    permission_classes = (permissions.IsAuthenticated,)
 
+    # gets all buckets from the database
     def get(self, request):
-        buckets = BucketList.objects.all()
+        buckets = BucketList.objects.filter(author_id=self.request.user)
         serializer = BucketListSerializer(buckets, many=True)
         return Response(serializer.data)
 
@@ -22,7 +25,7 @@ class BucketListView(APIView):
     def post(self, request):
         serializer = BucketListSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(author=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -33,12 +36,17 @@ class BucketListEditView(APIView):
     Retrieve, Update of delete a bucketlist
     """
 
-    # checks the bucket exists in the database
+    # requires authentication
+    permission_classes = (permissions.IsAuthenticated,)
 
+    # checks the bucket exists in the database
     def get_object(self, bucketlistid):
-        try:
-            return BucketList.objects.get(pk=bucketlistid)
-        except BucketList.DoesNotExist:
+        bucket = BucketList.objects.filter(
+            pk=bucketlistid,
+            author_id=self.request.user).first()
+        if bucket:
+            return bucket
+        else:
             raise Http404
 
     # gets the bucket
@@ -50,7 +58,7 @@ class BucketListEditView(APIView):
     # edit bucket
     def put(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
-        request.data['author'] = bucket.author_id
+        # request.data['author'] = bucket.author_id
         serializer = BucketListSerializer(bucket, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -69,21 +77,27 @@ class BucketItemView(APIView):
     """
     Create a bucketitem
     """
-    # checks the bucketitem exists
 
+    # requires authentication
+    permission_classes = (permissions.IsAuthenticated,)
+
+    # checks the bucketlist for the bucketitem exists
     def get_object(self, bucketlistid):
-        try:
-            return BucketList.objects.get(pk=bucketlistid)
-        except BucketList.DoesNotExist:
+        bucket = BucketList.objects.filter(
+            pk=bucketlistid,
+            author_id=self.request.user).first()
+        if bucket:
+            return bucket
+        else:
             raise Http404
 
     # adds a new bucketitem
     def post(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
-        request.data['bucketlist'] = bucket.id
+        # request.data['bucketlist'] = bucket.id
         serializer = BucketItemSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(bucketlist=bucket.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -94,13 +108,19 @@ class BucketItemEditView(APIView):
     Retrieve, Update of delete a bucketitem
     """
 
-    # checks the bucketitem exists
+    # requires authentication
+    permission_classes = (permissions.IsAuthenticated,)
 
+    # checks the bucketitem exists
     def get_object(self, bucketlistid, bucketitemid):
-        try:
-            return BucketlistItem.objects.filter(
-                pk=bucketitemid, bucketlist_id=bucketlistid).first()
-        except BucketlistItem.DoesNotExist:
+        bucket = BucketList.objects.filter(
+            pk=bucketlistid,
+            author_id=self.request.user).first()
+        bucketitem = BucketlistItem.objects.filter(
+            pk=bucketitemid, bucketlist_id=bucket).first()
+        if bucket and bucketitem:
+            return bucketitem
+        else:
             raise Http404
 
     # get a bucketitem

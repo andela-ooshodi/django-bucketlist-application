@@ -13,13 +13,13 @@ class BucketListView(APIView):
     """
     # gets all buckets from the database
 
-    def get(self, request, format=None):
+    def get(self, request):
         buckets = BucketList.objects.all()
         serializer = BucketListSerializer(buckets, many=True)
         return Response(serializer.data)
 
     # creates a new bucket
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = BucketListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -42,13 +42,13 @@ class BucketListEditView(APIView):
             raise Http404
 
     # gets the bucket
-    def get(self, request, bucketlistid, format=None):
+    def get(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
         serializer = BucketListSerializer(bucket)
         return Response(serializer.data)
 
     # edit bucket
-    def put(self, request, bucketlistid, format=None):
+    def put(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
         request.data['author'] = bucket.author_id
         serializer = BucketListSerializer(bucket, data=request.data)
@@ -58,7 +58,7 @@ class BucketListEditView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # delete bucket
-    def delete(self, request, bucketlistid, format=None):
+    def delete(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
         bucket.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -78,7 +78,7 @@ class BucketItemView(APIView):
             raise Http404
 
     # adds a new bucketitem
-    def post(self, request, bucketlistid, format=None):
+    def post(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
         request.data['bucketlist'] = bucket.id
         serializer = BucketItemSerializer(data=request.data)
@@ -104,13 +104,13 @@ class BucketItemEditView(APIView):
             raise Http404
 
     # get a bucketitem
-    def get(self, request, bucketlistid, bucketitemid, format=None):
+    def get(self, request, bucketlistid, bucketitemid):
         bucketitem = self.get_object(bucketlistid, bucketitemid)
         serializer = BucketItemSerializer(bucketitem)
         return Response(serializer.data)
 
     # edit a bucketitem
-    def put(self, request, bucketlistid, bucketitemid, format=None):
+    def put(self, request, bucketlistid, bucketitemid):
         bucketitem = self.get_object(bucketlistid, bucketitemid)
         request.data['bucketlist'] = bucketitem.bucketlist_id
         if 'name' not in request.data.keys():
@@ -122,7 +122,7 @@ class BucketItemEditView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # delete a bucketitem
-    def delete(self, request, bucketlistid, bucketitemid, format=None):
+    def delete(self, request, bucketlistid, bucketitemid):
         bucketitem = self.get_object(bucketlistid, bucketitemid)
         bucketitem.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

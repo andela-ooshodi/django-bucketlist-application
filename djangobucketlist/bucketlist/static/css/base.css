@@ -99,6 +99,10 @@ input[type="checkbox"] {
   text-align: center;
 }
 
+#loader {
+  display: none;
+}
+
 /* error page */
 #error-header {
   margin-bottom: 40px;

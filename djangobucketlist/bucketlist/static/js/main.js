@@ -10,6 +10,7 @@ $(document).ready(function() {
     });
     // AJAX for creating bucketitems
     function create_post(url, name) {
+        $('#loader').show();
         $.ajax({
             url: url,
             type: 'POST',
@@ -18,6 +19,7 @@ $(document).ready(function() {
             },
             // handle a successful response
             success: function(json) {
+                $('#loader').hide();
                 $('#id_name').val('');
                 $('#bucketModal').modal('hide');
                 $('#item-body').load(document.URL + " #item-body");
@@ -33,6 +35,7 @@ $(document).ready(function() {
     });
     // AJAX for editing bucketitem
     function edit_bucketitem(item_pk, item_bucket) {
+        $('#loader').show();
         $.ajax({
             url: '/bucketlist/' + item_bucket + '/bucketitem',
             type: 'PUT',
@@ -40,6 +43,7 @@ $(document).ready(function() {
                 itempk: item_pk
             },
             success: function(json) {
+                $('#loader').hide();
                 $('#item-body').load(document.URL + " #item-body");
             },
         });
@@ -53,6 +57,7 @@ $(document).ready(function() {
     });
     // AJAX for deleting bucketitem
     function delete_bucketitem(item_pk, item_bucket) {
+        $('#loader').show();
         $.ajax({
             url: '/bucketlist/' + item_bucket + '/bucketitem',
             type: 'DELETE',
@@ -60,6 +65,7 @@ $(document).ready(function() {
                 itempk: item_pk
             },
             success: function(json) {
+                $('#loader').hide();
                 $('#item-body').load(document.URL + " #item-body");
             },
         });
@@ -72,6 +78,7 @@ $(document).ready(function() {
     });
     // AJAX for deleting bucketlist
     function delete_bucketlist(list_pk, user) {
+        $('#loader').show();
         $.ajax({
             url: '/bucketlist/' + user,
             type: 'DELETE',
@@ -79,6 +86,7 @@ $(document).ready(function() {
                 listpk: list_pk
             },
             success: function(json) {
+                $('#loader').hide();
                 $('#bucket-body').load(document.URL + " #bucket-body");
             },
         });

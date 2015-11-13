@@ -1,5 +1,6 @@
 {% extends "bucketlist/base.html" %}
 {% load bootstrap %}
+{% load staticfiles %}
 
 {% block title %}Bucketlist: {{ name }}{% endblock %}
 
@@ -11,6 +12,9 @@
           <a class="pull-right" id="back" href="/bucketlist/{{ request.user.username }}"><i class="mdi mdi-arrow-left-bold-circle"></i></a>
           <h2 id="name">{{ name }}</h2>   
         </div>
+      </div>
+      <div class="text-center" id="loader">
+        <img src="{% static 'img/load.gif' %}">
       </div>
       <div class="page-content">
         <div class="row">

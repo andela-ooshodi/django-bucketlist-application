@@ -1,5 +1,6 @@
 {% extends "bucketlist/base.html" %}
 {% load bootstrap %}
+{% load staticfiles %}
 
 {% block title %}{{ request.user.username }}'s Bucketlist {% endblock %}
 
@@ -11,6 +12,9 @@
           <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a>
           <h1 id="name">Hello {{ request.user.username }}</h1>
         </div>
+      </div>
+      <div class="text-center" id="loader">
+        <img src="{% static 'img/load.gif' %}">
       </div>
       <div class="page-content">
         <div class="row">

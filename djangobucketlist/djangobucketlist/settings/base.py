@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'bucketlist',
     'apiv1',
     'bootstrapform',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,8 +97,15 @@ APPEND_SLASH = False
 STATIC_URL = '/static/'
 
 
-# Django_REST framework settings
+# Django REST_FRAMEWORK global settings
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'PAGE_SIZE': 10
 }

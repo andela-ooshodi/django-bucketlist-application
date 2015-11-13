@@ -4,7 +4,6 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
 
 
 class BucketListView(APIView):
@@ -12,10 +11,9 @@ class BucketListView(APIView):
     """
     List all buckets, or create a new bucket.
     """
-    # requires authentication
-    permission_classes = (permissions.IsAuthenticated,)
 
     # gets all buckets from the database
+
     def get(self, request):
         buckets = BucketList.objects.filter(author_id=self.request.user)
         serializer = BucketListSerializer(buckets, many=True)
@@ -36,10 +34,8 @@ class BucketListEditView(APIView):
     Retrieve, Update of delete a bucketlist
     """
 
-    # requires authentication
-    permission_classes = (permissions.IsAuthenticated,)
-
     # checks the bucket exists in the database
+
     def get_object(self, bucketlistid):
         bucket = BucketList.objects.filter(
             pk=bucketlistid,
@@ -78,10 +74,8 @@ class BucketItemView(APIView):
     Create a bucketitem
     """
 
-    # requires authentication
-    permission_classes = (permissions.IsAuthenticated,)
-
     # checks the bucketlist for the bucketitem exists
+
     def get_object(self, bucketlistid):
         bucket = BucketList.objects.filter(
             pk=bucketlistid,
@@ -108,10 +102,8 @@ class BucketItemEditView(APIView):
     Retrieve, Update of delete a bucketitem
     """
 
-    # requires authentication
-    permission_classes = (permissions.IsAuthenticated,)
-
     # checks the bucketitem exists
+
     def get_object(self, bucketlistid, bucketitemid):
         bucket = BucketList.objects.filter(
             pk=bucketlistid,

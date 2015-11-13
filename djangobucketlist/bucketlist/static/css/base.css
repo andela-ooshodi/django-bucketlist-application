@@ -11,6 +11,10 @@ body {
   color: #000;
 }
 
+i {
+  color: #000;
+}
+
 /* index pade styling */
 .centered {
   margin-top: 15%;
@@ -64,7 +68,7 @@ body {
 
 #back {
   display: block;
-  font-size: 20px;
+  font-size: 30px;
   margin-bottom: 10px;
 }
 
@@ -83,7 +87,8 @@ body {
 }
 
 .edit {
-  margin: 5px 10px;
+  margin: 3px 10px 0px;
+  font-size : 15px;
 }
 
 input[type="checkbox"] {
@@ -92,6 +97,7 @@ input[type="checkbox"] {
 
 .delete-item, .delete-list {
   padding: 0px;
+  font-size : 15px;
 }
 
 .pagination {

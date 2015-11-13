@@ -18,14 +18,14 @@ class Base(models.Model):
 
 
 class BucketList(Base):
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, related_name='buckets')
 
     class Meta(Base.Meta):
         db_table = 'bucketlist'
 
 
 class BucketlistItem(Base):
-    bucketlist = models.ForeignKey(BucketList)
+    bucketlist = models.ForeignKey(BucketList, related_name='bucketitems')
     done = models.BooleanField(default=False)
 
     class Meta(Base.Meta):

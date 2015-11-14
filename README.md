@@ -35,10 +35,10 @@ This project is divided into two apps
 
 
 ## API Documentation
-Django rest framework with swagger was used to document the API which can be viewed [here](http://127.0.0.1:8000/docs/api-docs/)
+Django rest framework with swagger was used to document the API which can be viewed [here](mybucketlist-staging.herokuapp.com/docs/api-docs/)
 
 
 ## myBucketlist
 Need to see the app for yourself?
-[myBucketlist](http://...)
+[myBucketlist](mybucketlist-staging.herokuapp.com)
 

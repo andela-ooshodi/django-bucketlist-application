@@ -66,3 +66,5 @@ djangobucketlist/mydatabase
 
 # environment variables
 .env.yml
+
+o-ri/

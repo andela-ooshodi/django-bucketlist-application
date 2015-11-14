@@ -1,14 +1,27 @@
 language: python
 python:
-  - "2.7"
+- '2.7'
 env:
-  - DJANGO_SETTINGS_MODULE=djangobucketlist.settings.test
-# command to install dependencies
-install: 
-  - pip install -r requirements.txt
-  - pip install coveralls
-# command to run tests
-script: 
-  coverage run djangobucketlist/manage.py test
-after_success: 
-  coveralls
+- DJANGO_SETTINGS_MODULE=djangobucketlist.settings.test
+install:
+- pip install -r requirements.txt
+- pip install coveralls
+- npm install bower
+script:
+- python djangobucketlist/manage.py bower install --settings=djangobucketlist.settings.test
+- python djangobucketlist/manage.py collectstatic --noinput --settings=djangobucketlist.settings.test
+- coverage run djangobucketlist/manage.py test
+after_success:
+- coveralls
+deploy:
+  provider: heroku
+  api_key:
+    secure: WEUlRPV6A4K9AQ46+WmlsogSm64qoykdEp/5cBs0VuDrdxMeXAZN1cNAfziqp3tPCkk4n62EwK0dZKKzc68DiHGmuphtPmE6CNwGRFn54C2kM5QWu+B1ugqshzOgbh/OrQ2Y6lfyBCY6tHsxJpLofO7NT7uaBDfhhNGFCIrQkKb43kvpoVEgRzSspjy+F3mx1b7ynj39QLtN7EJb9xJl+Lov2oqrPaqXPDRMPqHBbXx87/5+Md+ychz6jcaYBgTNRvt5c/D1iJ7vPaCqSNPFWZ6DIu0iBczaNjcXR8PNkfi2y3vLj0FoDflJjxLwdB+JJdzXXEETmunCG0nyigj89KqAv7oXET33WWr4LJGGBcRKssZVk9JFl4VPNhv5sojjXfiCeV88Fcx3XEvaVFECj3gV1XSpYvvCq6eZSBLDWfS2pUz9aIKmRYLgQaFuUZYY6dKytkgsl6Rd3TBFkGEJOJB8c9Fgt+OQth675tmnCzI/TPuaRG21nIV2ETWag3Vl/2k6ZjR+p70GVHL1GpUBuNg0iqNSJRV3Y+puaIr+cTq5o0A7ThiR49v4oPw0W9lQsa3klmmYmULdfSzGMyV7Y4EWZ4JA8+F8u52m39FfW3c7xmdjRSyVTXFC2/Zn3GmlXVkYbkxnvx4lsnRBdHqsZ1AVapwtMyj7nfTqkI/qEEg=
+  app: mybucketlist-staging
+  on:
+    repo: andela-ooshodi/django-bucketlist-application
+  run:
+    - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
+    - "python bucketlist/manage.py collectstatic --noinput"
+    - "python bucketlist/manage.py makemigrations"
+    - "python bucketlist/manage.py migrate"

@@ -17,7 +17,7 @@ class UsersView(generics.ListAPIView):
 class UsersDetailView(generics.RetrieveAPIView):
 
     """
-    List a users
+    List a user
     """
     permission_classes = (AllowAny,)
     queryset = User.objects.all()

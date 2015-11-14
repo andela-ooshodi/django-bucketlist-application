@@ -54,7 +54,6 @@ class BucketListEditView(APIView):
     # edit bucket
     def put(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
-        # request.data['author'] = bucket.author_id
         serializer = BucketListSerializer(bucket, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -88,10 +87,9 @@ class BucketItemView(APIView):
     # adds a new bucketitem
     def post(self, request, bucketlistid):
         bucket = self.get_object(bucketlistid)
-        # request.data['bucketlist'] = bucket.id
         serializer = BucketItemSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(bucketlist=bucket.id)
+            serializer.save(bucketlist_id=bucket.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -124,7 +122,6 @@ class BucketItemEditView(APIView):
     # edit a bucketitem
     def put(self, request, bucketlistid, bucketitemid):
         bucketitem = self.get_object(bucketlistid, bucketitemid)
-        request.data['bucketlist'] = bucketitem.bucketlist_id
         if 'name' not in request.data.keys():
             request.data['name'] = bucketitem.name
         serializer = BucketItemSerializer(bucketitem, data=request.data)

@@ -3,7 +3,7 @@ from apiv1 import views_buckets, views_users
 from rest_framework.authtoken import views
 
 urlpatterns = [
-    url(r'^login$', views.obtain_auth_token),
+    url(r'^login$', views.obtain_auth_token, name='apilogin'),
     url(r'^bucketlists$', views_buckets.BucketListView.as_view(),
         name='bucketlistapi'),
     url(r'^bucketlists/(?P<bucketlistid>[0-9]+)$',

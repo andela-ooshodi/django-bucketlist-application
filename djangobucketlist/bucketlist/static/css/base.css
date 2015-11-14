@@ -92,7 +92,7 @@ i {
 }
 
 input[type="checkbox"] {
-    margin: 4px 10px 0px;
+    margin: 5px 10px 0px;
 }
 
 .delete-item, .delete-list {

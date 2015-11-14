@@ -40,8 +40,10 @@ INSTALLED_APPS = (
     'bucketlist',
     'apiv1',
     'bootstrapform',
+    'djangobower',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'rest_framework_swagger'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,8 +96,21 @@ APPEND_SLASH = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, '..', 'bucketlist/static'),
+)
+
 STATIC_URL = '/static/'
 
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder'
+)
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Django REST_FRAMEWORK global settings
 
@@ -111,3 +126,19 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
+
+# Swagger settings
+
+SWAGGER_SETTINGS = {
+    'exclude_namespaces': [],
+    'api_version': 'version 1',
+}
+
+# Bower configurations
+BOWER_INSTALLED_APPS = (
+    'mdi',
+    'jquery',
+    'bootstrap',
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, '..', 'bucketlist/static')

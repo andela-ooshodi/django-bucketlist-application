@@ -63,3 +63,8 @@ djangobucketlist/djangobucketlist/settings/development.py
 
 # test db
 djangobucketlist/mydatabase
+
+# environment variables
+.env.yml
+
+o-ri/

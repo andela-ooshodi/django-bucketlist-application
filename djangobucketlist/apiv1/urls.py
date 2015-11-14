@@ -1,9 +1,8 @@
 from django.conf.urls import url
 from apiv1 import views_buckets, views_users
-from rest_framework.authtoken import views
 
 urlpatterns = [
-    url(r'^login$', views.obtain_auth_token, name='apilogin'),
+    url(r'^login$', views_users.LoginView.as_view(), name='apilogin'),
     url(r'^bucketlists$', views_buckets.BucketListView.as_view(),
         name='bucketlistapi'),
     url(r'^bucketlists/(?P<bucketlistid>[0-9]+)$',
@@ -17,5 +16,5 @@ urlpatterns = [
         name='bucketitemedit'),
     url(r'^users$', views_users.UsersView.as_view(), name='users'),
     url(r'^users/(?P<pk>[0-9]+)$',
-        views_users.UsersDetailView.as_view(), name='user')
+        views_users.UsersDetailView.as_view(), name='user'),
 ]

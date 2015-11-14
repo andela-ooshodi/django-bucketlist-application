@@ -24,6 +24,7 @@ deploy:
     repo: andela-ooshodi/django-bucketlist-application
   run:
     - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
-    - "python djangobucketlist/manage.py collectstatic --noinput"
-    - "python djangobucketlist/manage.py makemigrations"
-    - "python djangobucketlist/manage.py migrate"
+    - "python djangobucketlist/manage.py collectstatic --noinput --app mybucketlist-staging"
+    - "python djangobucketlist/manage.py makemigrations --app mybucketlist-staging"
+    - "python djangobucketlist/manage.py migrate --app mybucketlist-staging"
+    - "heroku ps:scale web=1 --app mybucketlist-staging"

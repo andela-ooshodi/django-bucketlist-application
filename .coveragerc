@@ -1,5 +1,2 @@
-[report]
-omit =  
-    */python?.?/*
-    */site-packages/*
-    *__init__*
+[run]
+source = bucketlist, apiv1

@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm(%x1m*2!qs9(l(s&n0nft&$9%3dbpcrc_v#*3cxd7#thj0zbb'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,8 +95,20 @@ APPEND_SLASH = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATICFILES_DIRS = (
+    'bucketlist/static',
+)
+
 STATIC_URL = '/static/'
 
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+)
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Django REST_FRAMEWORK global settings
 
@@ -116,6 +128,15 @@ REST_FRAMEWORK = {
 # Swagger settings
 
 SWAGGER_SETTINGS = {
-    "exclude_namespaces": [],
-    "api_version": "version 1",
+    'exclude_namespaces': [],
+    'api_version': 'version 1',
 }
+
+# Bower configurations
+BOWER_INSTALLED_APPS = (
+    'mdi',
+    'jquery',
+    'bootstrap',
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')

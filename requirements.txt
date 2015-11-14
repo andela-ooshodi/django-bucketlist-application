@@ -2,6 +2,7 @@ coverage==4.0.2
 dj-database-url==0.3.0
 Django==1.8
 django-bootstrap-form==3.2
+django-bower==5.0.4
 django-envie==0.0.9
 django-filter==0.11.0
 django-rest-swagger==0.3.4
@@ -11,5 +12,6 @@ Markdown==2.6.4
 psycopg2==2.6.1
 PyYAML==3.11
 selenium==2.48.0
+six==1.10.0
 wheel==0.24.0
 whitenoise==2.0.4

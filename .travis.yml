@@ -10,7 +10,7 @@ install:
 - pip install coveralls
 - npm install bower
 script:
-- python djangobucketlist/manage.py bower install --settings=djangobucketlist.settings.test
+- bower install --settings=djangobucketlist.settings.test
 - python djangobucketlist/manage.py collectstatic --noinput --settings=djangobucketlist.settings.test
 - coverage run djangobucketlist/manage.py test
 after_success:

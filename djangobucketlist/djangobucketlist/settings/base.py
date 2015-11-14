@@ -96,7 +96,7 @@ APPEND_SLASH = False
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATICFILES_DIRS = (
-    'bucketlist/static',
+    os.path.join(BASE_DIR, '..', 'bucketlist/static'),
 )
 
 STATIC_URL = '/static/'

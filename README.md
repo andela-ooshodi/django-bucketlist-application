@@ -18,6 +18,7 @@ It's simple design and friendly interactions makes it the app of choice to get y
 ### Getting Started
 ## Structure of the project
 This project is divided into two apps
+
 1. bucketlist - which house the complete standalone bucketlist app
 2. apiv1 - version 1 of the api which exposes the bucketlist app
 

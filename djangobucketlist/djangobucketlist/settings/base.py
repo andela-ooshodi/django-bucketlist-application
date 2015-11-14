@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'bucketlist',
     'apiv1',
     'bootstrapform',
+    'djangobower',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger'
@@ -105,7 +106,8 @@ STATIC_ROOT = 'staticfiles'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder'
 )
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
@@ -139,4 +141,4 @@ BOWER_INSTALLED_APPS = (
     'bootstrap',
 )
 
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, '..', 'bucketlist/static')

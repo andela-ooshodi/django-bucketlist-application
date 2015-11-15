@@ -35,7 +35,7 @@ This project is divided into two apps
 
 
 ## API Documentation
-Django rest framework with swagger was used to document the API which can be viewed [here](http://mybucketlist-staging.herokuapp.com/docs/api-docs)
+Django rest framework with swagger was used to document the API which can be viewed [here](http://mybucketlist-staging.herokuapp.com/docs/)
 
 
 ## myBucketlist

@@ -17,6 +17,9 @@ after_success:
 - coveralls
 deploy:
   provider: heroku
+  buildpack:
+    - node
+    - python
   api_key:
     secure: WEUlRPV6A4K9AQ46+WmlsogSm64qoykdEp/5cBs0VuDrdxMeXAZN1cNAfziqp3tPCkk4n62EwK0dZKKzc68DiHGmuphtPmE6CNwGRFn54C2kM5QWu+B1ugqshzOgbh/OrQ2Y6lfyBCY6tHsxJpLofO7NT7uaBDfhhNGFCIrQkKb43kvpoVEgRzSspjy+F3mx1b7ynj39QLtN7EJb9xJl+Lov2oqrPaqXPDRMPqHBbXx87/5+Md+ychz6jcaYBgTNRvt5c/D1iJ7vPaCqSNPFWZ6DIu0iBczaNjcXR8PNkfi2y3vLj0FoDflJjxLwdB+JJdzXXEETmunCG0nyigj89KqAv7oXET33WWr4LJGGBcRKssZVk9JFl4VPNhv5sojjXfiCeV88Fcx3XEvaVFECj3gV1XSpYvvCq6eZSBLDWfS2pUz9aIKmRYLgQaFuUZYY6dKytkgsl6Rd3TBFkGEJOJB8c9Fgt+OQth675tmnCzI/TPuaRG21nIV2ETWag3Vl/2k6ZjR+p70GVHL1GpUBuNg0iqNSJRV3Y+puaIr+cTq5o0A7ThiR49v4oPw0W9lQsa3klmmYmULdfSzGMyV7Y4EWZ4JA8+F8u52m39FfW3c7xmdjRSyVTXFC2/Zn3GmlXVkYbkxnvx4lsnRBdHqsZ1AVapwtMyj7nfTqkI/qEEg=
   app: mybucketlist-staging
@@ -27,4 +30,5 @@ deploy:
     - "python djangobucketlist/manage.py collectstatic --noinput --app mybucketlist-staging"
     - "python djangobucketlist/manage.py makemigrations --app mybucketlist-staging"
     - "python djangobucketlist/manage.py migrate --app mybucketlist-staging"
+    - "gunicorn djangobucketlist.wsgi --pythonpath=djangobucketlist --log-file -"
     - "heroku ps:scale web=1 --app mybucketlist-staging"

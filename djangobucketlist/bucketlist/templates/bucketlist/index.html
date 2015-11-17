@@ -9,7 +9,7 @@
     <div class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2">
     {% if messages %}
       {% for message in messages %}
-          <div class="alert alert-danger" role="alert" id="flash-message">
+          <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
               {{ message }}
           </div>
       {% endfor %}    

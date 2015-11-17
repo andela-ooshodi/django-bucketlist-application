@@ -1,8 +1,7 @@
 """
 view logic for performing CRUD operations on the bucketlist app
 """
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, View
 from django.contrib import messages
 from django.template import RequestContext
@@ -12,7 +11,6 @@ from django.utils.decorators import method_decorator
 
 from bucketlist.models import BucketList, BucketlistItem
 from bucketlist.forms.form_buckets import BucketListForm, BucketlistItemForm
-import json
 from datetime import datetime
 
 
@@ -36,7 +34,7 @@ class PaginationMixin(object):
 class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
     """
-    view for listing and creating neew bucketlists
+    view for listing and creating new bucketlists
     """
 
     template_name = 'bucketlist/bucketlist.html'
@@ -70,7 +68,9 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
             bucketlist = form.save(commit=False)
             bucketlist.author = self.request.user
             bucketlist.save()
-            return redirect('/bucketlist/{}/bucketitem'.format(bucketlist.id))
+            messages.add_message(
+                request, messages.SUCCESS, 'New bucket successfully created!')
+            return redirect('/bucketlist/{}/bucketitems'.format(bucketlist.id))
         except ValueError:
             # redirects to error page on adding an empty bucketlist
             return render(request, 'bucketlist/errors.html')
@@ -83,14 +83,14 @@ class BucketListEditView(LoginRequiredMixin, View):
     """
 
     def post(self, request, **kwargs):
-        bucketlist = BucketList.objects.get(pk=kwargs['bucketlistid'])
+        bucketlist = get_object_or_404(BucketList, pk=kwargs['bucketlistid'])
         bucketlist.name = request.POST['name']
-        if bucketlist.name is None:
-            # redirects to error page on adding an empty bucketlist
+        if not bucketlist.name:
+            # redirects to error page on adding an empty name
             return render(request, 'bucketlist/errors.html')
         bucketlist.save()
         messages.add_message(
-            request, messages.SUCCESS, 'Name change successfull!')
+            request, messages.SUCCESS, 'Name change successful!')
         return redirect(
             '/bucketlist',
             context_instance=RequestContext(request)
@@ -104,15 +104,14 @@ class BucketListDeleteView(LoginRequiredMixin, View):
     """
 
     def get(self, request, **kwargs):
-        bucketlist = BucketList.objects.get(pk=kwargs['bucketlistid'])
+        bucketlist = get_object_or_404(BucketList, pk=kwargs['bucketlistid'])
         bucketlist.delete()
         messages.add_message(
-            request, messages.INFO, 'Successfully deleted your bucketlist!')
+            request, messages.WARNING, 'Bucketlist Deleted!')
         return redirect(
             '/bucketlist',
             context_instance=RequestContext(request)
         )
-        return redirect('/bucketlist')
 
 
 class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
@@ -159,6 +158,9 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
     def post(self, request, **kwargs):
         bucketitem_name = request.POST.get('name')
+        if not bucketitem_name:
+            # returns error if trying to add an empty item
+            return render(request, 'bucketlist/errors.html')
         bucketitem = BucketlistItem(
             name=bucketitem_name,
             bucketlist=BucketList.objects.get(
@@ -166,31 +168,72 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
         bucketitem.save()
 
-        return HttpResponse(
-            json.dumps({'msg': 'success'}),
-            content_type="application/json"
+        messages.add_message(
+            request, messages.SUCCESS, 'Successfully added an item!')
+        return redirect(
+            '/bucketlist/{}/bucketitems'.format(kwargs['bucketlistid']),
+            context_instance=RequestContext(request)
         )
 
-    def put(self, request, **kwargs):
-        bucketitem = BucketlistItem.objects.get(
-            pk=int(request.body.split('=')[1]))
 
+class BucketItemEditView(LoginRequiredMixin, View):
+
+    """
+    view for editing a bucketitem
+    """
+
+    def get(self, request, **kwargs):
+        bucketitem = get_object_or_404(
+            BucketlistItem,
+            pk=kwargs['bucketitemid'])
         bucketitem.done = False if bucketitem.done else True
         bucketitem.date_modified = datetime.now
+
         bucketitem.save()
 
-        return HttpResponse(
-            json.dumps({'msg': 'success'}),
-            content_type="application/json"
+        messages.add_message(
+            request, messages.SUCCESS, 'Status change successful!')
+        return redirect(
+            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            context_instance=RequestContext(request)
         )
 
-    def delete(self, request, **kwargs):
-        bucketitem = BucketlistItem.objects.get(
-            pk=int(request.body.split('=')[1]))
+    def post(self, request, **kwargs):
+        bucketitem = get_object_or_404(
+            BucketlistItem,
+            pk=kwargs['bucketitemid'])
+        bucketitem.name = request.POST['name']
+
+        if not bucketitem.name:
+            # redirects to error page on adding an empty name
+            return render(request, 'bucketlist/errors.html')
+
+        bucketitem.save()
+
+        messages.add_message(
+            request, messages.SUCCESS, 'Name change successful!')
+        return redirect(
+            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            context_instance=RequestContext(request)
+        )
+
+
+class BucketItemDeleteView(LoginRequiredMixin, View):
+
+    """
+    view for deleteing a bucketitem
+    """
+
+    def get(self, request, **kwargs):
+        bucketitem = get_object_or_404(
+            BucketlistItem,
+            pk=kwargs['bucketitemid'])
 
         bucketitem.delete()
 
-        return HttpResponse(
-            json.dumps({'msg': 'success'}),
-            content_type="application/json"
+        messages.add_message(
+            request, messages.WARNING, 'Item Deleted!')
+        return redirect(
+            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            context_instance=RequestContext(request)
         )

@@ -68,7 +68,6 @@ i {
 
 #back {
   display: block;
-  font-size: 30px;
   margin-bottom: 10px;
 }
 
@@ -87,7 +86,7 @@ i {
 }
 
 .edit {
-  margin: 3px 10px 0px;
+  margin: 5px 7px 0px;
   font-size : 15px;
 }
 
@@ -95,7 +94,7 @@ input[type="checkbox"] {
     margin: 5px 10px 0px;
 }
 
-.delete-item, #delete-list {
+#delete-item, #delete-list {
   padding: 0px;
   font-size : 15px;
 }

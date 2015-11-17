@@ -61,8 +61,8 @@ class AuthenticationTest(TestCase):
             'password': 'test',
             'verify_password': 'test'
         })
-        # should not redirect
-        self.assertEqual(response.status_code, 200)
+        # redirect to index page with an error message
+        self.assertEqual(response.status_code, 302)
 
     def test_registration_error(self):
         response = self.client.post('/register', {
@@ -70,5 +70,5 @@ class AuthenticationTest(TestCase):
             'password': 'password',
             'verify_password': 'different'
         })
-        # should not redirect
-        self.assertEqual(response.status_code, 200)
+        # redirect to index page with an error message
+        self.assertEqual(response.status_code, 302)

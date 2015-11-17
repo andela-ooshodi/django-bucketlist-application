@@ -29,38 +29,50 @@ class BucketlistViewTest(TestCase):
     def test_can_reach_bucketlist_page(self):
         self.assertEqual(self.login, True)
         response = self.client.get(
-            reverse('bucketlist', kwargs={'username': 'test'}))
+            reverse('bucketlist'))
         self.assertEqual(response.status_code, 200)
 
     def test_request_for_empty_bucketlist_page(self):
         response = self.client.get(
-            '/bucketlist/test?page=100000')
+            '/bucketlist?page=100000')
         # returns the last page available
         self.assertEqual(response.status_code, 200)
 
-    def test_request_for_unauthorized_bucketlist_page(self):
-        response = self.client.get(
-            '/bucketlist/anotheruser')
-        # returns the error page
-        self.assertEqual(response.template_name[0], 'bucketlist/errors.html')
-
     def test_can_make_a_bucketlist(self):
         response = self.client.post(
-            reverse('bucketlist', kwargs={'username': 'test'}), {
+            reverse('bucketlist'), {
                 'name': 'A new bucketlist'
             })
         self.assertEqual(response.status_code, 302)
 
     def test_error_creating_bucketlist(self):
         response = self.client.post(
-            reverse('bucketlist', kwargs={'username': 'test'}))
-        self.assertEqual(response.status_code, 200)
+            reverse('bucketlist'))
+        # should not redirect
+        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
+
+    def test_edit_bucketlist(self):
+        response = self.client.post(
+            reverse(
+                'bucketlistedit', kwargs={'bucketlistid': self.bucketlist.id}),
+            {
+                'name': 'This is a changed name'
+            })
+        self.assertEqual(response.status_code, 302)
+
+    def test_edit_bucketlist_error(self):
+        response = self.client.post(
+            reverse(
+                'bucketlistedit', kwargs={'bucketlistid': self.bucketlist.id}),
+            {
+                'name': ''
+            })
+        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
 
     def test_delete_bucketlist(self):
-        response = self.client.delete(reverse(
-            'bucketlist', kwargs={'username': 'test'}),
-            'pk={}'.format(self.bucketlist.id))
-        self.assertEqual(response.status_code, 200)
+        response = self.client.get(reverse(
+            'bucketlistdelete', kwargs={'bucketlistid': self.bucketlist.id}))
+        self.assertEqual(response.status_code, 302)
 
 
 class BucketItemViewTest(TestCase):
@@ -93,16 +105,16 @@ class BucketItemViewTest(TestCase):
 
     def test_request_for_empty_bucketitem_page(self):
         response = self.client.get(
-            '/bucketlist/{}/bucketitem?page=100000'.format(self.bucketlist.id))
+            '/bucketlist/{}/bucketitems?page=100000'.format(self.bucketlist.id))
         # returns the last page available
         self.assertEqual(response.status_code, 200)
 
     def test_request_for_unauthorized_bucketitem_page(self):
         # request for bucketlist id not associated with current user id
         response = self.client.get(
-            '/bucketlist/2/bucketitem')
+            '/bucketlist/2/bucketitems')
         # returns the error page
-        self.assertEqual(response.template_name[0], 'bucketlist/errors.html')
+        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
 
     def test_can_add_bucketitem(self):
         response = self.client.post(
@@ -111,18 +123,43 @@ class BucketItemViewTest(TestCase):
             {
                 'name': 'A new bucketitem'
             })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
+
+    def test_add_bucketitem_error(self):
+        response = self.client.post(
+            reverse(
+                'bucketitem', kwargs={'bucketlistid': self.bucketlist.id}),
+            {
+                'name': ''
+            })
+        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
 
     def test_can_mark_a_task_as_done(self):
-        response = self.client.put(
+        response = self.client.get(
             reverse(
-                'bucketitem', kwargs={'bucketlistid': self.bucketlist.id}),
-            'pk={}'.format(self.bucketitem.id))
-        self.assertEqual(response.status_code, 200)
+                'bucketitemedit', kwargs={'bucketitemid': self.bucketitem.id}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_edit_bucketitem(self):
+        response = self.client.post(
+            reverse(
+                'bucketitemedit', kwargs={'bucketitemid': self.bucketitem.id}),
+            {
+                'name': 'This is a changed name'
+            })
+        self.assertEqual(response.status_code, 302)
+
+    def test_edit_bucketitem_error(self):
+        response = self.client.post(
+            reverse(
+                'bucketitemedit', kwargs={'bucketitemid': self.bucketitem.id}),
+            {
+                'name': ''
+            })
+        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
 
     def test_can_delete_a_bucketitem(self):
-        response = self.client.delete(
+        response = self.client.get(
             reverse(
-                'bucketitem', kwargs={'bucketlistid': self.bucketlist.id}),
-            'pk={}'.format(self.bucketitem.id))
-        self.assertEqual(response.status_code, 200)
+                'bucketitemedit', kwargs={'bucketitemid': self.bucketitem.id}))
+        self.assertEqual(response.status_code, 302)

@@ -50,21 +50,21 @@ class BuckListApiTestCase(APITestCase):
     # test can get a bucket from bucketlist
     def test_get_a_bucketlist(self):
         url = reverse(
-            'bucketlistedit', kwargs={'bucketlistid': self.bucket.id})
+            'bucketlistapiedit', kwargs={'bucketlistid': self.bucket.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     # test can get a bucket from bucketlist error
     def test_get_a_bucketlist_error(self):
         url = reverse(
-            'bucketlistedit', kwargs={'bucketlistid': 100})
+            'bucketlistapiedit', kwargs={'bucketlistid': 100})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     # test can edit a bucket
     def test_edit_a_bucketlist(self):
         url = reverse(
-            'bucketlistedit', kwargs={'bucketlistid': self.bucket.id})
+            'bucketlistapiedit', kwargs={'bucketlistid': self.bucket.id})
         data = {'name': 'I just changed this bucket\'s name'}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, 200)
@@ -72,7 +72,7 @@ class BuckListApiTestCase(APITestCase):
     # test can edit a bucket error
     def test_edit_a_bucketlist_error(self):
         url = reverse(
-            'bucketlistedit', kwargs={'bucketlistid': self.bucket.id})
+            'bucketlistapiedit', kwargs={'bucketlistid': self.bucket.id})
         data = {'nam': 'This is an error'}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, 400)
@@ -80,7 +80,7 @@ class BuckListApiTestCase(APITestCase):
     # test can delete a bucket
     def test_delete_a_bucketlist(self):
         url = reverse(
-            'bucketlistedit', kwargs={'bucketlistid': self.bucket.id})
+            'bucketlistapiedit', kwargs={'bucketlistid': self.bucket.id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
 
@@ -134,7 +134,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test to get a bucketitem
     def test_get_bucketitem(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': self.bucketitem.id})
         response = self.client.get(url)
@@ -143,7 +143,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test to get a bucketitem error
     def test_get_bucketitem_error(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': 100})
         response = self.client.get(url)
@@ -152,7 +152,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test edit a bucketitem
     def test_edit_bucketitem(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': self.bucketitem.id})
         data = {'name': 'This is a test bucketitem',
@@ -163,7 +163,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test edit a bucketitem done field alone
     def test_edit_bucketitem_done(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': self.bucketitem.id})
         data = {'done': True}
@@ -173,7 +173,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test edit a bucketitem error
     def test_edit_bucketitem_error(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': self.bucketitem.id})
         data = {'done': 'done'}
@@ -183,7 +183,7 @@ class BucketlistItemApiTestCase(APITestCase):
     # test delete a bucketitem
     def test_delete_bucketitem(self):
         url = reverse(
-            'bucketitemedit', kwargs={
+            'bucketitemapiedit', kwargs={
                 'bucketlistid': self.bucket.id,
                 'bucketitemid': self.bucketitem.id})
         response = self.client.delete(url)

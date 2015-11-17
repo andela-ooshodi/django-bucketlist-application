@@ -19,13 +19,13 @@ class UsersTestCase(APITestCase):
 
     # test can view all registered users through the API
     def test_users_view(self):
-        url = reverse('users')
+        url = reverse('apiusers')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     # test can view a single registered user
     def test_user_view(self):
-        url = reverse('user', kwargs={'pk': self.user.id})
+        url = reverse('apiuser', kwargs={'pk': self.user.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 

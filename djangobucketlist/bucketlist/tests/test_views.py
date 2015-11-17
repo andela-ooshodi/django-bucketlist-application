@@ -69,7 +69,6 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
             'name').send_keys('A new bucketitem')
         self.browser.find_element_by_xpath(
             "//button[contains(text(),'Add')]").click()
-        self.browser.refresh()
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('A new bucketitem', body.text)
 

@@ -142,3 +142,12 @@ BOWER_INSTALLED_APPS = (
 )
 
 BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, '..', 'bucketlist/static')
+
+
+# Default database configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'bucketlist-db',
+    }
+}

@@ -3,7 +3,7 @@ view logic for performing CRUD operations on the bucketlist app
 """
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib import messages
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -18,6 +18,7 @@ from datetime import datetime
 
 class LoginRequiredMixin(object):
     # View mixin which requires that the user is authenticated.
+
     @method_decorator(login_required(login_url='/'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(
@@ -26,12 +27,18 @@ class LoginRequiredMixin(object):
 
 class PaginationMixin(object):
     # grabs the page number in a get query string
+
     def dispatch(self, request, *args, **kwargs):
         self.page = request.GET.get('page')
         return super(PaginationMixin, self).dispatch(request, *args, **kwargs)
 
 
 class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
+
+    """
+    view for listing and creating neew bucketlists
+    """
+
     template_name = 'bucketlist/bucketlist.html'
     form_class = BucketListForm
 
@@ -51,13 +58,9 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
         # get context
         context = super(BucketListView, self).get_context_data(**kwargs)
-        username = kwargs['username']
-        context['username'] = username
+        context['username'] = self.request.user.username
         context['bucketlistform'] = BucketListForm()
         context['buckets'] = buckets
-        if username != self.request.user.username:
-            # returns error if trying to access bucketlist not owned
-            self.template_name = 'bucketlist/errors.html'
 
         return context
 
@@ -72,22 +75,52 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
             # redirects to error page on adding an empty bucketlist
             return render(request, 'bucketlist/errors.html')
 
-    def delete(self, request, **kwargs):
-        bucketlist = BucketList.objects.get(
-            pk=int(request.body.split('=')[1]))
-        bucketitems = BucketlistItem.objects.filter(
-            bucketlist_id=bucketlist.pk)
 
-        bucketlist.delete()
-        bucketitems.delete()
+class BucketListEditView(LoginRequiredMixin, View):
 
-        return HttpResponse(
-            json.dumps({'msg': 'success'}),
-            content_type="application/json"
+    """
+    View for changing a bucketlist name
+    """
+
+    def post(self, request, **kwargs):
+        bucketlist = BucketList.objects.get(pk=kwargs['bucketlistid'])
+        bucketlist.name = request.POST['name']
+        if bucketlist.name is None:
+            # redirects to error page on adding an empty bucketlist
+            return render(request, 'bucketlist/errors.html')
+        bucketlist.save()
+        messages.add_message(
+            request, messages.SUCCESS, 'Name change successfull!')
+        return redirect(
+            '/bucketlist',
+            context_instance=RequestContext(request)
         )
 
 
+class BucketListDeleteView(LoginRequiredMixin, View):
+
+    """
+    view for deleting a bucketlist
+    """
+
+    def get(self, request, **kwargs):
+        bucketlist = BucketList.objects.get(pk=kwargs['bucketlistid'])
+        bucketlist.delete()
+        messages.add_message(
+            request, messages.INFO, 'Successfully deleted your bucketlist!')
+        return redirect(
+            '/bucketlist',
+            context_instance=RequestContext(request)
+        )
+        return redirect('/bucketlist')
+
+
 class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
+
+    """
+    view for lisitng and creating bucketitems
+    """
+
     template_name = 'bucketlist/bucketitem.html'
     form_class = BucketlistItemForm
 

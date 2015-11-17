@@ -13,6 +13,11 @@ urlpatterns = [
         name='register'),
     url(r'^bucketlist$', view_bucketlist.BucketListView.as_view(),
         name='bucketlist'),
+    url(r'^bucketlist/(?P<bucketlistid>[0-9]+)/edit$',
+        view_bucketlist.BucketListEditView.as_view(), name='bucketlistedit'),
+    url(r'^bucketlist/(?P<bucketlistid>[0-9]+)/delete$',
+        view_bucketlist.BucketListDeleteView.as_view(),
+        name='bucketlistdelete'),
     url(r'^bucketlist/(?P<bucketlistid>[0-9]+)/bucketitem$',
         view_bucketlist.BucketItemView.as_view(), name='bucketitem'),
 ]

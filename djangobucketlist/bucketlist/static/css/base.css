@@ -95,7 +95,7 @@ input[type="checkbox"] {
     margin: 5px 10px 0px;
 }
 
-.delete-item, .delete-list {
+.delete-item, #delete-list {
   padding: 0px;
   font-size : 15px;
 }

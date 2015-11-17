@@ -13,9 +13,13 @@
           <h2 id="name">{{ name }}</h2>   
         </div>
       </div>
-      <div class="text-center" id="loader">
-        <img src="{% static 'img/load.gif' %}">
-      </div>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
+              {{ message }}
+          </div>
+        {% endfor %}    
+      {% endif %}
       <div class="page-content">
         <div class="row">
           <h3>Items &nbsp;

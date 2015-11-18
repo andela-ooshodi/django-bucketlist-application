@@ -4,10 +4,17 @@
 {% block title %}Error{% endblock %}
 
 {% block body %}
-  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
     <div class="content text-center">
-      <h1 id="error-header">Whoops!!!!</h1>
-      <p><a class="btn btn-default btn-lg" href="/" role="button">Click here to go back</a></p>
+        <h1 id="error-header">Whoops!!!!</h1>
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+              {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+        <p><a class="btn btn-default btn-lg" href="/" role="button">Click here to go back</a></p>
     </div>
-  </div>
+</div>
 {% endblock body %}

@@ -72,6 +72,9 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
                 request, messages.SUCCESS, 'New bucket successfully created!')
             return redirect('/bucketlist/{}/bucketitems'.format(bucketlist.id))
         except ValueError:
+            messages.add_message(
+                request, messages.ERROR,
+                'You attempted to enter an unnamed bucketlist')
             # redirects to error page on adding an empty bucketlist
             return render(request, 'bucketlist/errors.html')
 
@@ -83,9 +86,13 @@ class BucketListEditView(LoginRequiredMixin, View):
     """
 
     def post(self, request, **kwargs):
-        bucketlist = get_object_or_404(BucketList, pk=kwargs['bucketlistid'])
+        bucketlist = BucketList.objects.filter(
+            pk=kwargs['bucketlistid'], author_id=self.request.user).first()
         bucketlist.name = request.POST['name']
         if not bucketlist.name:
+            messages.add_message(
+                request, messages.ERROR,
+                'You attempted to change to an empty name!')
             # redirects to error page on adding an empty name
             return render(request, 'bucketlist/errors.html')
         bucketlist.save()
@@ -104,7 +111,12 @@ class BucketListDeleteView(LoginRequiredMixin, View):
     """
 
     def get(self, request, **kwargs):
-        bucketlist = get_object_or_404(BucketList, pk=kwargs['bucketlistid'])
+        bucketlist = BucketList.objects.filter(
+            pk=kwargs['bucketlistid'], author_id=self.request.user).first()
+        if not bucketlist:
+            messages.add_message(
+                request, messages.ERROR, 'Unauthorized Access!')
+            return render(request, 'bucketlist/errors.html')
         bucketlist.delete()
         messages.add_message(
             request, messages.WARNING, 'Bucketlist Deleted!')
@@ -159,8 +171,12 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
     def post(self, request, **kwargs):
         bucketitem_name = request.POST.get('name')
         if not bucketitem_name:
+            messages.add_message(
+                request, messages.ERROR,
+                'You attempted to enter an unnamed bucketitem')
             # returns error if trying to add an empty item
             return render(request, 'bucketlist/errors.html')
+
         bucketitem = BucketlistItem(
             name=bucketitem_name,
             bucketlist=BucketList.objects.get(
@@ -186,6 +202,16 @@ class BucketItemEditView(LoginRequiredMixin, View):
         bucketitem = get_object_or_404(
             BucketlistItem,
             pk=kwargs['bucketitemid'])
+
+        # check if the bucketitem belongs to the requester
+        bucketlist = BucketList.objects.get(pk=bucketitem.bucketlist_id)
+        if bucketlist.author_id != self.request.user.id:
+            messages.add_message(
+                request, messages.ERROR,
+                'Unauthorized access')
+            # returns error for unauthorized access
+            return render(request, 'bucketlist/errors.html')
+
         bucketitem.done = False if bucketitem.done else True
         bucketitem.date_modified = datetime.now
 
@@ -205,6 +231,9 @@ class BucketItemEditView(LoginRequiredMixin, View):
         bucketitem.name = request.POST['name']
 
         if not bucketitem.name:
+            messages.add_message(
+                request, messages.ERROR,
+                'You tried to change to an empty name!')
             # redirects to error page on adding an empty name
             return render(request, 'bucketlist/errors.html')
 
@@ -228,6 +257,15 @@ class BucketItemDeleteView(LoginRequiredMixin, View):
         bucketitem = get_object_or_404(
             BucketlistItem,
             pk=kwargs['bucketitemid'])
+
+        # check if the bucketitem belongs to the requester
+        bucketlist = BucketList.objects.get(pk=bucketitem.bucketlist_id)
+        if bucketlist.author_id != self.request.user.id:
+            messages.add_message(
+                request, messages.ERROR,
+                'Unauthorized access')
+            # returns error for unauthorized access
+            return render(request, 'bucketlist/errors.html')
 
         bucketitem.delete()
 

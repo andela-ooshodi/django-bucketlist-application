@@ -41,7 +41,7 @@ class BucketListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BucketListEditView(APIView):
+class BucketListDetailView(APIView):
 
     """
     Retrieve, Update or delete a bucketlist
@@ -133,7 +133,7 @@ class BucketItemView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BucketItemEditView(APIView):
+class BucketItemDetailView(APIView):
 
     """
     Retrieve, Update or delete a bucketitem

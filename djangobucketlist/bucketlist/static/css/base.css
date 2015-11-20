@@ -1,24 +1,43 @@
 body {
-  background: url("../img/bucket.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Montserrat', sans-serif;
+  background-color: #F5F5F5;
+  font-family: 'Lato', sans-serif;
 }
 
 .btn-default {
-  color: #000;
+  color: #163550;
 }
 
 i {
-  color: #000;
+  color: #163550;
 }
 
 /* index pade styling */
 .centered {
-  margin-top: 15%;
+  margin-top: 7%;
+  color: #163550;
+}
+
+#title {
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-size: 70px;
+  font-weight: 300;
+  letter-spacing: -2px;
+}
+
+#logo {
+  font-size: 200px;
+  opacity: 0.8;
+}
+
+#get-started {
+  margin-bottom: 10px;
   color: #fff;
+}
+
+#login {
+  color: #fff;
+  background-color: #163550;
 }
 
 .copyright {
@@ -30,7 +49,7 @@ i {
 
 /* modal styling */
 .modal-content {
-  color: #000;
+  color: #163550;
 }
 
 /* home page content styling */
@@ -41,25 +60,25 @@ i {
 .content {
   height: 100%;
   width: 100%;
-  background: url("../img/paper.jpg") no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
   background-color: #fff;
   border-radius: 8px;
   padding: 40px 10px 10px 10px;
   margin: 20px 0px;
-  color: #000;
+  color: #163550;
 }
 
 .content .row {
   margin: 0px 20px;
   overflow: hidden;
 }
+.buckets a {
+  color: #163550;
+}
 
 #name {
   display: inline-block;
+  color: #163550;
+  font-size: 50px;
 }
 
 #logout {

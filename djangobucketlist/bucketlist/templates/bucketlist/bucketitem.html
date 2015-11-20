@@ -37,13 +37,13 @@
         <div class="row">
           <div class="col-sm-12">
             <h2 class="page-sub-title">{{ name }} &nbsp;
-              <a id="add-item-icon" class="btn btn-default btn-sm" role="button" href="#bucketModal" data-toggle="modal">Add</a>
+              <a id="add-item-icon" class="btn btn-default btn-sm" role="button" href="#add-bucketitem" data-toggle="modal">Add</a>
               <a class="pull-right btn btn-default btn-sm" role="button" id="back" href="/bucketlist">Back</a>
             </h2>
           </div>
         </div>
         <!-- bucketitem form modal -->
-        <div id="bucketModal" class="modal fade" role="dialog">
+        <div id="add-bucketitem" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -67,11 +67,11 @@
                 <ul class="list-group">
                   {% for item in bucketitems %}
                   <li class="list-group-item">{{ item.name }}
-                    <a href="{% url 'bucketitemdelete' item.id %}" class="btn pull-right" id="delete-item" title="Delete"><i class="mdi mdi-close"></i></a>  
+                    <a href="#confirm-delete-{{ item.id }}" data-toggle="modal" class="btn pull-right" id="delete-item" title="Delete"><i class="mdi mdi-close"></i></a>  
                     <a href="{% url 'bucketitemedit' item.id %}" title="Mark as done"><input class="pull-right" id="item-checkbox" type="checkbox" {% if item.done %}checked{% endif %}></a>
-                    <a href="#bucketModal2" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil pull-right edit"></i></a>
+                    <a href="#edit-name-{{ item.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil pull-right edit"></i></a>
                     <!-- Edit bucketitem name form modal -->
-                    <div id="bucketModal2" class="modal fade" role="dialog">
+                    <div id="edit-name-{{ item.id }}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -86,6 +86,24 @@
                             </form>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <!-- Delete bucketlist modal -->
+                    <div id="confirm-delete-{{ item.id }}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title text-center">Confirm Delete</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <h5 class="text-center">Are you sure you want to delete "{{ item.name }}"? </h5>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                  <a href="{% url 'bucketitemdelete' item.id %}" class="btn btn-danger">Delete</a>
+                              </div>
+                          </div>
                       </div>
                     </div>
                   </li>

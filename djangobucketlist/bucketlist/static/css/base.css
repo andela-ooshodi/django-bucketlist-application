@@ -3,6 +3,10 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+body .row {
+  margin: auto;
+}
+
 .btn-default {
   color: #163550;
 }

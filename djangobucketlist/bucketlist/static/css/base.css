@@ -32,7 +32,7 @@ i {
 
 #get-started {
   margin-bottom: 10px;
-  color: #fff;
+  color: #163550;
 }
 
 #login {
@@ -54,7 +54,25 @@ i {
 
 /* home page content styling */
 .header {
-  margin-bottom: 50px;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 20px;
+}
+
+.breadcrumb {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  background-color: #fff;
+}
+
+.page-title {
+  font-size: 2.0em;
+  color: #163550;
+  font-weight: 300;
+}
+
+.page-sub-title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
 }
 
 .content {
@@ -62,7 +80,7 @@ i {
   width: 100%;
   background-color: #fff;
   border-radius: 8px;
-  padding: 40px 10px 10px 10px;
+  padding: 10px;
   margin: 20px 0px;
   color: #163550;
 }
@@ -71,7 +89,7 @@ i {
   margin: 0px 20px;
   overflow: hidden;
 }
-.buckets a {
+.buckets a, .breadcrumb a {
   color: #163550;
 }
 
@@ -85,10 +103,6 @@ i {
   margin-top: 20px;
 }
 
-#back {
-  display: block;
-  margin-bottom: 10px;
-}
 
 .list-group {
   margin-bottom: 0px;
@@ -97,6 +111,10 @@ i {
 .list-group-item {
   background-color: #F5F5F5;
   border: none;
+}
+
+.list-group-item:hover {
+  background-color: #fff
 }
 
 .buckets {

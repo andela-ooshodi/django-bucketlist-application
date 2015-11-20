@@ -68,7 +68,7 @@
                   {% for item in bucketitems %}
                   <li class="list-group-item">{{ item.name }}
                     <a href="#confirm-delete-{{ item.id }}" data-toggle="modal" class="btn pull-right" id="delete-item" title="Delete"><i class="mdi mdi-close"></i></a>  
-                    <a href="{% url 'bucketitemedit' item.id %}" title="Mark as done"><input class="pull-right" id="item-checkbox" type="checkbox" {% if item.done %}checked{% endif %}></a>
+                    <a href="{% url 'bucketitemedit' item.id %}" title="Mark as done" id="item-checkbox"><input class="pull-right" type="checkbox" {% if item.done %}checked{% endif %}></a>
                     <a href="#edit-name-{{ item.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil pull-right edit"></i></a>
                     <!-- Edit bucketitem name form modal -->
                     <div id="edit-name-{{ item.id }}" class="modal fade" role="dialog">

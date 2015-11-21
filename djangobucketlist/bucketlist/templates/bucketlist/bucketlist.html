@@ -5,12 +5,24 @@
 {% block title %}{{ username }}'s Bucketlist {% endblock %}
 
 {% block body %}
-  <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 col-xs-12">
     <div class="content">
       <div class="header">
         <div class="row">
-          <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a>
-          <h1 id="name">Hello {{ username }}</h1>
+          <div class="col-sm-8 col-xs-8">
+            <h1 class="page-title"><i class="mdi mdi-clipboard-text"></i> myBucketList</h1>
+          </div>
+          <div class="col-sm-4 col-xs-4">
+            <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a> 
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <ol class="breadcrumb">
+            <li class="active">Bucketlist</li>
+          </ol>
         </div>
       </div>
       {% if messages %}
@@ -22,12 +34,15 @@
       {% endif %}
       <div class="page-content">
         <div class="row">
-          <h2>My bucketlists &nbsp;
-          <a id="add-list-icon" class="btn btn-default" role="button" href="#bucketModal" data-toggle="modal">Add</a>
-          </h2>
+          <div class="col-sm-12">
+            <h6>Hello {{ username }},</h6>
+            <h2 class="page-sub-title">Bucketlists &nbsp;
+            <a id="add-list-icon" class="btn btn-default btn-sm" role="button" href="#add-bucket" data-toggle="modal">Add</a>
+            </h2>
+          </div>
         </div>
         <!-- bucketlist form modal -->
-        <div id="bucketModal" class="modal fade" role="dialog">
+        <div id="add-bucket" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -44,55 +59,78 @@
             </div>
           </div>
         </div>
-        <div class="buckets well">
-          <div id="bucket-body">
-            <ul class="list-group">
-              {% for bucket in buckets %}
-              <li class="list-group-item">
-                <a href="{% url 'bucketitem' bucket.id  %}">{{ bucket.name }}</a>
-                <a href="{% url 'bucketlistdelete' bucket.id %}" class="btn pull-right" id="delete-list"><i class="mdi mdi-close"></i></a>
-                <a href="#bucketModal2" data-toggle="modal"><i class="mdi mdi-pencil pull-right edit"></i></a>
-                <!-- Edit bucketlist name form modal -->
-                <div id="bucketModal2" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title text-center">Change the name of this bucketlist</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form role="form" action="{% url 'bucketlistedit' bucket.id %}" method="post">
-                          {% csrf_token %}
-                          {{ bucketlistform|bootstrap }}
-                          <button type="submit" class="btn btn-default">Change</button>
-                        </form>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="buckets well">
+              <div id="bucket-body">
+                <ul class="list-group">
+                  {% for bucket in buckets %}
+                  <li class="list-group-item">
+                    <a href="{% url 'bucketitem' bucket.id  %}">{{ bucket.name }}</a>
+                    <a href="#confirm-delete-{{ bucket.id }}" data-toggle="modal" class="btn pull-right" id="delete-list" title="Delete"><i class="mdi mdi-close"></i></a>
+                    <a href="#edit-name-{{ bucket.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil pull-right edit"></i></a>
+                    <!-- Edit bucketlist name form modal -->
+                    <div id="edit-name-{{ bucket.id }}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-center">Change the name of this bucketlist</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form role="form" action="{% url 'bucketlistedit' bucket.id %}" method="post">
+                              {% csrf_token %}
+                              {{ bucketlistform|bootstrap }}
+                              <button type="submit" class="btn btn-default">Change</button>
+                            </form>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    <!-- Delete bucketlist modal -->
+                    <div id="confirm-delete-{{ bucket.id }}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title text-center">Confirm Delete</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <h5 class="text-center">Are you sure you want to delete "{{ bucket.name }}"? </h5>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                  <a href="{% url 'bucketlistdelete' bucket.id %}" class="btn btn-danger">Delete</a>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </li>
+                  {% empty %}
+                  <div class="alert alert-info">Let's add a new bucketlist, click the "Add" button to get started</div>
+                  {% endfor %}
+                </ul>
+                <div class="pagination">
+                  <span class="step-links">
+                    {% if buckets.has_previous %}
+                      <a href="?page={{ buckets.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
+                    {% endif %}
+                    {% if buckets.paginator.num_pages > 1 %}
+                    <span class="current">
+                      {{ buckets.number }} of {{ buckets.paginator.num_pages }}
+                    </span>
+                    {% endif %}
+                    {% if buckets.has_next %}
+                      <a href="?page={{ buckets.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
+                    {% endif %}
+                  </span>
                 </div>
-              </li>
-              {% empty %}
-              <div class="alert alert-info">Let's add a new bucketlist, click the "Add" button to get started</div>
-              {% endfor %}
-            </ul>
-            <div class="pagination">
-              <span class="step-links">
-                {% if buckets.has_previous %}
-                  <a href="?page={{ buckets.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
-                {% endif %}
-                {% if buckets.paginator.num_pages > 1 %}
-                <span class="current">
-                  {{ buckets.number }} of {{ buckets.paginator.num_pages }}
-                </span>
-                {% endif %}
-                {% if buckets.has_next %}
-                  <a href="?page={{ buckets.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
-                {% endif %}
-              </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock body %}

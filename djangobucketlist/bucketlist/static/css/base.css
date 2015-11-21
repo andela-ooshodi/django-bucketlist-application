@@ -1,24 +1,47 @@
 body {
-  background: url("../img/bucket.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Montserrat', sans-serif;
+  background-color: #F5F5F5;
+  font-family: 'Lato', sans-serif;
+}
+
+body .row {
+  margin: auto;
 }
 
 .btn-default {
-  color: #000;
+  color: #163550;
 }
 
 i {
-  color: #000;
+  color: #163550;
 }
 
 /* index pade styling */
 .centered {
-  margin-top: 15%;
+  margin-top: 7%;
+  color: #163550;
+}
+
+#title {
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-size: 70px;
+  font-weight: 300;
+  letter-spacing: -2px;
+}
+
+#logo {
+  font-size: 200px;
+  opacity: 0.8;
+}
+
+#get-started {
+  margin-bottom: 10px;
+  color: #163550;
+}
+
+#login {
   color: #fff;
+  background-color: #163550;
 }
 
 .copyright {
@@ -30,46 +53,60 @@ i {
 
 /* modal styling */
 .modal-content {
-  color: #000;
+  color: #163550;
 }
 
 /* home page content styling */
 .header {
-  margin-bottom: 50px;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 20px;
+}
+
+.breadcrumb {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  background-color: #fff;
+}
+
+.page-title {
+  font-size: 2.0em;
+  color: #163550;
+  font-weight: 300;
+}
+
+.page-sub-title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
 }
 
 .content {
   height: 100%;
   width: 100%;
-  background: url("../img/paper.jpg") no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
   background-color: #fff;
   border-radius: 8px;
-  padding: 40px 10px 10px 10px;
+  padding: 10px;
   margin: 20px 0px;
-  color: #000;
+  color: #163550;
 }
 
 .content .row {
   margin: 0px 20px;
   overflow: hidden;
 }
+.buckets a, .breadcrumb a {
+  color: #163550;
+}
 
 #name {
   display: inline-block;
+  color: #163550;
+  font-size: 50px;
 }
 
 #logout {
   margin-top: 20px;
 }
 
-#back {
-  display: block;
-  margin-bottom: 10px;
-}
 
 .list-group {
   margin-bottom: 0px;
@@ -78,6 +115,10 @@ i {
 .list-group-item {
   background-color: #F5F5F5;
   border: none;
+}
+
+.list-group-item:hover {
+  background-color: #fff
 }
 
 .buckets {

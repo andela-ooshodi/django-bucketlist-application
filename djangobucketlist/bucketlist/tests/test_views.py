@@ -24,7 +24,7 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
 
         # asserting index page was successfully reached
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Welcome to myBucketlist', body.text)
+        self.assertIn('myBucketlist', body.text)
 
         # asserting a successful login
         self.browser.find_element_by_xpath(
@@ -40,7 +40,7 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         password_field.send_keys('laddeos')
         password_field.send_keys(Keys.RETURN)
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('My bucketlist', body.text)
+        self.assertIn('Bucketlists', body.text)
 
         # add a new bucketlist
         self.browser.find_element_by_id('add-list-icon').click()
@@ -55,7 +55,7 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         self.browser.find_element_by_xpath(
             "//button[contains(text(),'Add')]").click()
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Items', body.text)
+        self.assertIn('A new bucketlist', body.text)
 
         # add a new bucketitem
         self.browser.find_element_by_id('add-item-icon').click()
@@ -76,4 +76,4 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         self.browser.find_element_by_id('back').click()
         self.browser.find_element_by_id('logout').click()
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Welcome to myBucketlist', body.text)
+        self.assertIn('myBucketlist', body.text)

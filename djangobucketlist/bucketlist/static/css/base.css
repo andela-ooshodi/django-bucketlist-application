@@ -8,7 +8,8 @@ body .row {
 }
 
 .btn-default {
-  color: #163550;
+  background-color: #163550;
+  color: #fff;
 }
 
 i {
@@ -37,18 +38,12 @@ i {
 #get-started {
   margin-bottom: 10px;
   color: #163550;
+  background-color: #fff;
 }
 
 #login {
   color: #fff;
   background-color: #163550;
-}
-
-.copyright {
-  position : fixed;
-  bottom : 0;
-  right: 0;
-  clear: both;
 }
 
 /* modal styling */

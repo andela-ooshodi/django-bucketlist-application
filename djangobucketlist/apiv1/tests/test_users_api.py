@@ -29,7 +29,7 @@ class UsersTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    # test can recceive token
+    # test can receive token
     def test_login(self):
         url = reverse('apilogin')
         data = {'username': 'test', 'password': 'test'}

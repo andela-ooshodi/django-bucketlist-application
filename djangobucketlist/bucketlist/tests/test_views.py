@@ -73,7 +73,6 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         self.assertIn('A new bucketitem', body.text)
 
         # assert successful logout
-        self.browser.find_element_by_id('back').click()
         self.browser.find_element_by_id('logout').click()
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('myBucketlist', body.text)

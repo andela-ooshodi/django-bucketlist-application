@@ -10,35 +10,42 @@
     <div class="content">
       <div class="header">
         <div class="row">
-          <div class="col-sm-8 col-xs-8">
+          <div class="col-sm-6 col-xs-6">
             <h1 class="page-title"><i class="mdi mdi-clipboard-text"></i> myBucketList</h1>
           </div>
-          <div class="col-sm-4 col-xs-4">
-            <a class="btn btn-default pull-right" id="logout" href="/logout" role="button">LogOut</a> 
+          <div class="col-sm-6 col-xs-6">
+            
+            <h6 class="pull-right">
+              Logged in as {{ username }},
+              <a id="logout" href="/logout">Logout</a>
+            </h6>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <ol class="breadcrumb">
-            <li class="active">Bucketlist</li>
-          </ol>
-        </div>
-      </div>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
-              {{ message }}
-          </div>
-        {% endfor %}    
-      {% endif %}
       <div class="page-content">
         <div class="row">
           <div class="col-sm-12">
-            <h6>Hello {{ username }},</h6>
             <h2 class="page-sub-title">Bucketlists &nbsp;
             <a id="add-list-icon" class="btn btn-default btn-sm" role="button" href="#add-bucket" data-toggle="modal">Add</a>
             </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li class="active">Bucketlist</li>
+            </ol>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
+                    {{ message }}
+                </div>
+              {% endfor %}    
+            {% endif %}
           </div>
         </div>
         <!-- bucketlist form modal -->

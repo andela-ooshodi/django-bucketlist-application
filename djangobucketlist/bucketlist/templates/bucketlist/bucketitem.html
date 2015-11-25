@@ -18,28 +18,31 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <ol class="breadcrumb">
-            <li><a href="/bucketlist">Bucketlist</a></li>
-            <li class="active">Bucketitems</li>
-          </ol>
-        </div>
-      </div>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
-              {{ message }}
-          </div>
-        {% endfor %}    
-      {% endif %}
       <div class="page-content">
         <div class="row">
           <div class="col-sm-12">
             <h2 class="page-sub-title">{{ name }} &nbsp;
               <a id="add-item-icon" class="btn btn-default btn-sm" role="button" href="#add-bucketitem" data-toggle="modal">Add</a>
-              <a class="pull-right btn btn-default btn-sm" role="button" id="back" href="/bucketlist">Back</a>
             </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li><a href="/bucketlist">Bucketlist</a></li>
+              <li class="active">Bucketitems</li>
+            </ol>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert" id="flash-message">
+                    {{ message }}
+                </div>
+              {% endfor %}    
+            {% endif %}
           </div>
         </div>
         <!-- bucketitem form modal -->

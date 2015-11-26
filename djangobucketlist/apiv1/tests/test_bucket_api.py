@@ -20,7 +20,7 @@ class BuckListApiTestCase(APITestCase):
 
         # generate token for the user
         token = Token.objects.get(user_id=self.user.id)
-        # Include appropriate 'Authorization:' header on al request
+        # Include appropriate 'Authorization:' header on all request
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def tearDown(self):

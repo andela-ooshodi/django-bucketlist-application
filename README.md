@@ -43,7 +43,7 @@ SECRET_KEY:
 ```
 
 ## API Documentation
-Django rest framework with swagger was used to document the API which can be viewed [here](http://mybucketlist-staging.herokuapp.com/docs/)
+Django REST framework with swagger was used to document the API which can be viewed [here](http://mybucketlist-staging.herokuapp.com/docs/)
 
 
 ## myBucketlist

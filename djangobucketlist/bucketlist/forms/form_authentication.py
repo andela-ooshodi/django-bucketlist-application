@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
         label='Password', max_length=100,
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': '*****'
+                'placeholder': '**********'
             }))
 
 

@@ -16,24 +16,68 @@ i {
   color: #163550;
 }
 
-/* index pade styling */
-.centered {
-  margin-top: 7%;
-  color: #163550;
+/* index page styling */
+#logo {
+  font-size: 200px;
+  text-align: center;
+  display: block;
+  margin-top: 20%;
 }
 
 #title {
-  margin-top: 0px;
-  margin-bottom: 50px;
   font-size: 70px;
   font-weight: 300;
   letter-spacing: -2px;
+  text-align: center;
 }
 
-#logo {
-  font-size: 200px;
-  opacity: 0.8;
+.registration-form {
+  margin-top: 15%;
+  font-weight: bold;
 }
+
+.registration-form .form-horizontal .form-group {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.registration-form .form-group label.control-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.registration-form legend {
+  margin-bottom: 0px;
+}
+
+.login-form {
+  display: none;
+  margin-top: 30%;
+  font-weight: bold;
+}
+
+.login-form .form-horizontal .form-group {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.login-form .form-group label.control-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.login-form legend {
+  margin-bottom: 0px;
+}
+
+#login-link, #registration-link {
+  cursor: pointer;
+}
+
+/*
+
+
+
 
 #get-started {
   margin-bottom: 10px;
@@ -44,15 +88,15 @@ i {
 #login {
   color: #fff;
   background-color: #163550;
-}
+}*/
 
 /* modal styling */
-.modal-content {
+/*.modal-content {
   color: #163550;
 }
-
+*/
 /* home page content styling */
-.header {
+/*.header {
   border-bottom: 1px solid #efefef;
   padding-bottom: 20px;
 }
@@ -140,9 +184,9 @@ input[type="checkbox"] {
 
 #loader {
   display: none;
-}
+}*/
 
 /* error page */
-#error-header {
+/*#error-header {
   margin-bottom: 40px;
-}
+}*/

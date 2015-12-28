@@ -15,15 +15,19 @@ It's simple design and friendly interactions makes it the app of choice to get y
 
 ![Bucketlist](screenshots/bucketlist.jpg)
 
-### Getting Started
+## Getting Started
 ## Structure of the project
 This project is divided into two apps
 
 1. bucketlist - which houses the complete standalone bucketlist app
 2. apiv1 - version 1 of the api which exposes the bucketlist app
 
+## Features
+### Version 2
+- Switched from bootstrap to bootstrap-material-design
+
 ## Installation
-1. Clone the repository into a Virtual Environment. 
+1. Clone the repository and create a Virtual Environment. 
 - Run `virtualenv <virtualenvname>` or `mkvirtualenv <virtualenvname>` if using virtualenv wrapper to create the virtual environment.
 2. Install all the necessary requirements by running `pip install -r requirements.txt` within the virtual environment.
 3. Configure your database configurations in a development.py and save in the settings folder

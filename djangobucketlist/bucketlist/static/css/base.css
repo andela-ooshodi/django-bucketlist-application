@@ -1,12 +1,7 @@
 body {
-    background: url("../img/bucket.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    /* For when there is no backgroud picture*/
     background-color: #F5F5F5; 
     font-family: 'Lato', sans-serif;
+    height: 100%;
 }
 
 body .row {
@@ -24,7 +19,6 @@ i {
 
 
 /* index page styling */
-
 #logo {
     font-size: 200px;
     text-align: center;
@@ -40,7 +34,7 @@ i {
 }
 
 .registration-form {
-    margin-top: 10%;
+    margin-top: 7%;
     font-weight: bold;
     background-color: #fff;
     padding: 30px 50px;
@@ -88,6 +82,23 @@ i {
 
 #flash-message {
     margin-top: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    top: 100%;
+}
+
+.footer a, .footer a:hover, .footer a:focus {
+    color: #333;
+}
+
+
+/* error page */
+#error-header {
+  margin-bottom: 40px;
 }
 /*
 
@@ -209,9 +220,3 @@ input[type="checkbox"] {
 }*/
 
 
-/* error page */
-
-
-/*#error-header {
-  margin-bottom: 40px;
-}*/

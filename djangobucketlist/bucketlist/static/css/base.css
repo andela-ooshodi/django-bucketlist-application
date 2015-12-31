@@ -86,7 +86,9 @@ i {
     cursor: pointer;
 }
 
-
+#flash-message {
+    margin-top: 10px;
+}
 /*
 
 

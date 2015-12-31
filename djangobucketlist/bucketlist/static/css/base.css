@@ -1,78 +1,91 @@
 body {
-  background-color: #F5F5F5;
-  font-family: 'Lato', sans-serif;
+    background: url("../img/bucket.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* For when there is no backgroud picture*/
+    background-color: #F5F5F5; 
+    font-family: 'Lato', sans-serif;
 }
 
 body .row {
-  margin: auto;
+    margin: auto;
 }
 
 .btn-default {
-  background-color: #163550;
-  color: #fff;
+    background-color: #163550;
+    color: #fff;
 }
 
 i {
-  color: #163550;
+    color: #163550;
 }
 
+
 /* index page styling */
+
 #logo {
-  font-size: 200px;
-  text-align: center;
-  display: block;
-  margin-top: 20%;
+    font-size: 200px;
+    text-align: center;
+    display: block;
+    margin-top: 20%;
 }
 
 #title {
-  font-size: 70px;
-  font-weight: 300;
-  letter-spacing: -2px;
-  text-align: center;
+    font-size: 70px;
+    font-weight: 300;
+    letter-spacing: -2px;
+    text-align: center;
 }
 
 .registration-form {
-  margin-top: 15%;
-  font-weight: bold;
+    margin-top: 10%;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 30px 50px;
 }
 
 .registration-form .form-horizontal .form-group {
-  margin-left: 0px;
-  margin-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .registration-form .form-group label.control-label {
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    color: #333;
 }
 
 .registration-form legend {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .login-form {
-  display: none;
-  margin-top: 30%;
-  font-weight: bold;
+    display: none;
+    margin-top: 20%;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 30px 50px;
 }
 
 .login-form .form-horizontal .form-group {
-  margin-left: 0px;
-  margin-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .login-form .form-group label.control-label {
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    color: #333;
 }
 
 .login-form legend {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 #login-link, #registration-link {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 
 /*
 
@@ -90,12 +103,19 @@ i {
   background-color: #163550;
 }*/
 
+
 /* modal styling */
+
+
 /*.modal-content {
   color: #163550;
 }
 */
+
+
 /* home page content styling */
+
+
 /*.header {
   border-bottom: 1px solid #efefef;
   padding-bottom: 20px;
@@ -186,7 +206,10 @@ input[type="checkbox"] {
   display: none;
 }*/
 
+
 /* error page */
+
+
 /*#error-header {
   margin-bottom: 40px;
 }*/

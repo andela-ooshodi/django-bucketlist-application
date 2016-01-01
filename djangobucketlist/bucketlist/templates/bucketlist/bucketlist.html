@@ -115,62 +115,22 @@
         <div class="alert alert-info">Let's add a new bucketlist, click the "Add" button to get started</div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="pagination">
+            <span class="step-links">
+                {% if buckets.has_previous %}
+                <a href="?page={{ buckets.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
+                {% endif %}
+                {% if buckets.paginator.num_pages > 1 %}
+                <span class="current">
+                {{ buckets.number }} of {{ buckets.paginator.num_pages }}
+                </span>
+                {% endif %}
+                {% if buckets.has_next %}
+                <a href="?page={{ buckets.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
 </div>
 {% endblock body %}
-<!-- <div class="col-sm-6 col-sm-offset-3 col-xs-12">
-            <div class="content">
-                <div class="header">
-                        <div class="row">
-                            <div class="col-sm-6 col-xs-6">
-                                    
-                            </div>
-                            <div class="col-sm-6 col-xs-6">
-                                    <h6 class="pull-right">
-                                   
-                                    </h6>
-                            </div>
-                        </div>
-                </div>
-                <div class="page-content">
-                        
-                        <div class="row">
-                            <div class="col-sm-12">
-                                    <ol class="breadcrumb">
-                                        <li class="active">Bucketlist</li>
-                                    </ol>
-                            </div>
-                        </div>
-                        <div class="row">
-                            
-            </div> -->
-            <!-- bucketlist form modal -->
-            <!--  
-                        <div class="row">
-                            <div class="col-sm-12">
-                                    <div class="buckets well">
-                                        <div id="bucket-body">
-                                                <ul class="list-group">
-                                                    
-                                                </ul>
-                                                <div class="pagination">
-                                                    <span class="step-links">
-                                                        {% if buckets.has_previous %}
-                                                        <a href="?page={{ buckets.previous_page_number }}"><i class="mdi mdi-arrow-left-bold"></i></a>
-                                                        {% endif %}
-                                                        {% if buckets.paginator.num_pages > 1 %}
-                                                        <span class="current">
-                                                        {{ buckets.number }} of {{ buckets.paginator.num_pages }}
-                                                        </span>
-                                                        {% endif %}
-                                                        {% if buckets.has_next %}
-                                                        <a href="?page={{ buckets.next_page_number }}"><i class="mdi mdi-arrow-right-bold"></i></a>
-                                                        {% endif %}
-                                                    </span>
-                                                </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-</div>-->

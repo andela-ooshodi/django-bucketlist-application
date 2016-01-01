@@ -10,7 +10,11 @@ body .row {
 
 .btn-default {
     background-color: #163550;
-    color: #fff;
+    color: #fff !important;
+}
+
+.btn:focus {
+    background-color: #163550 !important;
 }
 
 i {
@@ -95,15 +99,74 @@ i {
     color: #333;
 }
 
+/* home page styling */
+.navbar.navbar-inverse {
+    background-color: #fff;
+    color: #333;
+}
+
+#nav-text {
+    padding: 20px 0px;
+}
+
+.page-title {
+  font-size: 2.0em;
+  color: #163550;
+  font-weight: 300;
+}
+
+.page-sub-title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.form-group label.control-label {
+    color: #333;
+    font-weight: bold;
+}
+
+@media (max-width: 1199px) {
+    #nav-text {
+        padding: 15px 0px 15px 15px;
+    }
+}
+
+/* bucketlists styling */
+.bucket {
+    position: relative;
+}
+
+.bucketlist-title {
+    display: inline-block;
+    cursor: default;
+}
+
+.bucketlist-title:hover .edit {
+    display: inline-block;
+}
+
+.edit {
+    display: none;
+}
+
+.delete-list {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.modal-delete-btn {
+    margin-top: 0px;
+}
 
 /* error page */
 #error-header {
   margin-bottom: 40px;
 }
+
+
 /*
-
-
-
 
 #get-started {
   margin-bottom: 10px;
@@ -138,16 +201,9 @@ i {
   margin: 0px 0px 10px 0px;
 }
 
-.page-title {
-  font-size: 2.0em;
-  color: #163550;
-  font-weight: 300;
-}
 
-.page-sub-title {
-  font-size: 1.5em;
-  margin-bottom: 15px;
-}
+
+
 
 .content {
   height: 100%;

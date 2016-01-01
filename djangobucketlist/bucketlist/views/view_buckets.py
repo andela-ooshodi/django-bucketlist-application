@@ -70,7 +70,7 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
             bucketlist.save()
             messages.add_message(
                 request, messages.SUCCESS, 'New bucket successfully created!')
-            return redirect('/bucketlist/{}/bucketitems'.format(bucketlist.id))
+            return redirect('/bucketlist')
         except ValueError:
             messages.add_message(
                 request, messages.ERROR,

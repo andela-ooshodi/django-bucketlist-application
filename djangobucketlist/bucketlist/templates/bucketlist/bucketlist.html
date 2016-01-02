@@ -66,11 +66,11 @@
             <div class="panel panel-default bucket">
                 <div class="panel-heading">
                     <h4 class="bucketlist-title"> {{ bucket.name }} &nbsp;
-                        <a href="#edit-name-{{ bucket.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil edit"></i></a>
+                        <a href="#edit-listname-{{ bucket.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil edit-list"></i></a>
                     </h4>
-                    <a href="#confirm-delete-{{ bucket.id }}" data-toggle="modal" class="delete-list" title="Delete"><i class="mdi mdi-close"></i></a> 
+                    <a href="#confirm-listdelete-{{ bucket.id }}" data-toggle="modal" class="delete-list" title="Delete"><i class="mdi mdi-close"></i></a> 
                     <!-- Edit bucketlist name form modal -->
-                    <div id="edit-name-{{ bucket.id }}" class="modal fade" role="dialog">
+                    <div id="edit-listname-{{ bucket.id }}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <!--Delete bucketlist modal -->
-                    <div id="confirm-delete-{{ bucket.id }}" class="modal fade" role="dialog">
+                    <div id="confirm-listdelete-{{ bucket.id }}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -106,13 +106,27 @@
                         </div>
                     </div>
                 </div>
+                <!-- Panel to display bucketitems -->
                 <div class="panel-body">
-                    Panel content
+                    <ul class="list-group">
+                        {% for bucketitem in bucket.bucketitems.all %}
+                        <li class="list-group-item">
+                            <a href="{% url 'bucketitemedit' bucketitem.id %}" title="Mark as done" class="item-checkbox"><input type="checkbox" {% if bucketitem.done %}checked{% endif %}></a>
+                            <h5 class="bucketitem-name">{{ bucketitem.name }}
+                                <a href="#edit-itemname-{{ bucketitem.id }}" data-toggle="modal" title="Edit"><i class="mdi mdi-pencil edit-item"></i></a>
+                                <a href="#confirm-itemdelete-{{ bucketitem.id }}" data-toggle="modal" class="delete-item" title="Delete"><i class="mdi mdi-close"></i></a>
+                            </h5>
+                        </li>
+                        <hr>
+                        {% empty %}
+                        <div class="alert alert-info empty">Empty, let's fill up our bucket &nbsp;<i class="mdi mdi-cup-water"></i></div>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>                                            
         {% empty %}
-        <div class="alert alert-info">Let's add a new bucketlist, click the "Add" button to get started</div>
+        <div class="alert alert-info empty">Let's add a new bucketlist, click the "Add" button to get started</div>
         {% endfor %}
     </div>
     <div class="row">

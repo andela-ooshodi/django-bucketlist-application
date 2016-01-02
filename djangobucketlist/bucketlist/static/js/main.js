@@ -23,7 +23,7 @@ var eventListeners = {
             show_login_form();
         });
         // Submit checkbox value
-        $("body").on("click", "#item-checkbox", function(e) {
+        $("body").on("click", ".item-checkbox", function(e) {
             e.preventDefault();
             var url = $(this).attr("href");
             window.location.assign(url);

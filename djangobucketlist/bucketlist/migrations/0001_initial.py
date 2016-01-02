@@ -19,9 +19,10 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200)),
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name=b'created')),
                 ('date_modified', models.DateTimeField(auto_now=True, verbose_name=b'modified')),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(related_name='buckets', to=settings.AUTH_USER_MODEL)),
             ],
             options={
+                'ordering': ['-date_modified'],
                 'abstract': False,
                 'db_table': 'bucketlist',
             },
@@ -34,9 +35,10 @@ class Migration(migrations.Migration):
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name=b'created')),
                 ('date_modified', models.DateTimeField(auto_now=True, verbose_name=b'modified')),
                 ('done', models.BooleanField(default=False)),
-                ('bucketlist', models.ForeignKey(to='bucketlist.BucketList')),
+                ('bucketlist', models.ForeignKey(related_name='bucketitems', to='bucketlist.BucketList')),
             ],
             options={
+                'ordering': ['done', '-date_modified'],
                 'abstract': False,
                 'db_table': 'bucketitem',
             },

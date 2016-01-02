@@ -42,7 +42,7 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         buckets_all = BucketList.objects.filter(
-            author_id=self.request.user.id).order_by('-date_modified')
+            author_id=self.request.user.id)
         # limit the number of buckets per page to 10
         paginator = Paginator(buckets_all, 10)
         try:
@@ -68,12 +68,15 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
             bucketlist = form.save(commit=False)
             bucketlist.author = self.request.user
             bucketlist.save()
-            messages.add_message(
-                request, messages.SUCCESS, 'New bucket successfully created!')
-            return redirect('/bucketlist')
+            messages.success(
+                request, 'New bucket successfully created!')
+            return redirect(
+                '/bucketlist',
+                context_instance=RequestContext(request)
+            )
         except ValueError:
-            messages.add_message(
-                request, messages.ERROR,
+            messages.error(
+                request,
                 'You attempted to enter an unnamed bucketlist')
             # redirects to error page on adding an empty bucketlist
             return render(request, 'bucketlist/errors.html')
@@ -90,14 +93,14 @@ class BucketListEditView(LoginRequiredMixin, View):
             pk=kwargs['bucketlistid'], author_id=self.request.user).first()
         bucketlist.name = request.POST['name']
         if not bucketlist.name:
-            messages.add_message(
-                request, messages.ERROR,
+            messages.error(
+                request,
                 'You attempted to change to an empty name!')
             # redirects to error page on adding an empty name
             return render(request, 'bucketlist/errors.html')
         bucketlist.save()
-        messages.add_message(
-            request, messages.SUCCESS, 'Name change successful!')
+        messages.success(
+            request, 'Name change successful!')
         return redirect(
             '/bucketlist',
             context_instance=RequestContext(request)
@@ -114,12 +117,12 @@ class BucketListDeleteView(LoginRequiredMixin, View):
         bucketlist = BucketList.objects.filter(
             pk=kwargs['bucketlistid'], author_id=self.request.user).first()
         if not bucketlist:
-            messages.add_message(
-                request, messages.ERROR, 'Unauthorized Access!')
+            messages.error(
+                request, 'Unauthorized Access!')
             return render(request, 'bucketlist/errors.html')
         bucketlist.delete()
-        messages.add_message(
-            request, messages.WARNING, 'Bucketlist Deleted!')
+        messages.warning(
+            request, 'Bucketlist Deleted!')
         return redirect(
             '/bucketlist',
             context_instance=RequestContext(request)
@@ -171,8 +174,8 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
     def post(self, request, **kwargs):
         bucketitem_name = request.POST.get('name')
         if not bucketitem_name:
-            messages.add_message(
-                request, messages.ERROR,
+            messages.error(
+                request,
                 'You attempted to enter an unnamed bucketitem')
             # returns error if trying to add an empty item
             return render(request, 'bucketlist/errors.html')
@@ -184,8 +187,8 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
 
         bucketitem.save()
 
-        messages.add_message(
-            request, messages.SUCCESS, 'Successfully added an item!')
+        messages.success(
+            request, 'Successfully added an item!')
         return redirect(
             '/bucketlist/{}/bucketitems'.format(kwargs['bucketlistid']),
             context_instance=RequestContext(request)
@@ -206,9 +209,8 @@ class BucketItemEditView(LoginRequiredMixin, View):
         # check if the bucketitem belongs to the requester
         bucketlist = BucketList.objects.get(pk=bucketitem.bucketlist_id)
         if bucketlist.author_id != self.request.user.id:
-            messages.add_message(
-                request, messages.ERROR,
-                'Unauthorized access')
+            messages.error(
+                request, 'Unauthorized access')
             # returns error for unauthorized access
             return render(request, 'bucketlist/errors.html')
 
@@ -217,10 +219,10 @@ class BucketItemEditView(LoginRequiredMixin, View):
 
         bucketitem.save()
 
-        messages.add_message(
-            request, messages.SUCCESS, 'Status change successful!')
+        messages.success(
+            request, 'Status change successful!')
         return redirect(
-            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            '/bucketlist',
             context_instance=RequestContext(request)
         )
 
@@ -231,18 +233,18 @@ class BucketItemEditView(LoginRequiredMixin, View):
         bucketitem.name = request.POST['name']
 
         if not bucketitem.name:
-            messages.add_message(
-                request, messages.ERROR,
+            messages.error(
+                request,
                 'You tried to change to an empty name!')
             # redirects to error page on adding an empty name
             return render(request, 'bucketlist/errors.html')
 
         bucketitem.save()
 
-        messages.add_message(
-            request, messages.SUCCESS, 'Name change successful!')
+        messages.success(
+            request, 'Name change successful!')
         return redirect(
-            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            '/bucketlist',
             context_instance=RequestContext(request)
         )
 
@@ -261,17 +263,17 @@ class BucketItemDeleteView(LoginRequiredMixin, View):
         # check if the bucketitem belongs to the requester
         bucketlist = BucketList.objects.get(pk=bucketitem.bucketlist_id)
         if bucketlist.author_id != self.request.user.id:
-            messages.add_message(
-                request, messages.ERROR,
+            messages.error(
+                request,
                 'Unauthorized access')
             # returns error for unauthorized access
             return render(request, 'bucketlist/errors.html')
 
         bucketitem.delete()
 
-        messages.add_message(
-            request, messages.WARNING, 'Item Deleted!')
+        messages.warning(
+            request, 'Item Deleted!')
         return redirect(
-            '/bucketlist/{}/bucketitems'.format(bucketitem.bucketlist_id),
+            '/bucketlist',
             context_instance=RequestContext(request)
         )

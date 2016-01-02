@@ -21,6 +21,18 @@ i {
     color: #163550;
 }
 
+hr {
+    margin: 7px 0px;
+}
+
+.empty {
+    background-color: #163550 !important;
+    color: #fff !important;
+}
+
+.empty i {
+    color: #fff;
+}
 
 /* index page styling */
 #logo {
@@ -141,11 +153,11 @@ i {
     cursor: default;
 }
 
-.bucketlist-title:hover .edit {
+.bucketlist-title:hover .edit-list {
     display: inline-block;
 }
 
-.edit {
+.edit-list {
     display: none;
 }
 
@@ -163,6 +175,34 @@ i {
 .pagination {
   width: 100%;
   text-align: center;
+}
+
+/* bucketitems element styling */
+.item-checkbox {
+    margin-right: 10px;
+}
+
+.edit-item {
+    display: none;
+    margin-left: 10px;
+}
+
+.delete-item {
+    display: none;
+}
+
+.bucketitem-name {
+    cursor: default;
+    display: inline-block;
+    width: 91%;
+}
+
+.list-group-item:hover {
+    background-color: #eee
+}
+
+.bucketitem-name:hover .edit-item, .bucketitem-name:hover .delete-item  {
+    display: inline-block;
 }
 
 /* error page */

@@ -39,7 +39,7 @@ class AuthenticationTest(TestCase):
         })
         # should redirect back to index page
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, 'http://testserver/')
+        self.assertEqual(response.url, 'http://testserver/login')
 
     def test_redirect_logged_in_user(self):
         self.client.login(

@@ -112,27 +112,6 @@ class BucketItemViewTest(TestCase):
         BucketList.objects.all().delete()
         BucketlistItem.objects.all().delete()
 
-    def test_can_reach_bucketitems_page(self):
-        self.assertEqual(self.login, True)
-        response = self.client.get(
-            reverse('bucketitem', kwargs={'bucketlistid': self.bucketlist.id}))
-        self.assertEqual(response.status_code, 200)
-
-    def test_request_for_empty_bucketitem_page(self):
-        response = self.client.get(
-            '/bucketlist/{}/bucketitems?page=100000'.format(
-                self.bucketlist.id
-            ))
-        # returns the last page available
-        self.assertEqual(response.status_code, 200)
-
-    def test_request_for_unauthorized_bucketitem_page(self):
-        # request for bucketlist id not associated with current user id
-        response = self.client.get(
-            '/bucketlist/2/bucketitems')
-        # returns the error page
-        self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')
-
     def test_can_add_bucketitem(self):
         response = self.client.post(
             reverse(
@@ -194,6 +173,8 @@ class BucketItemViewTest(TestCase):
     def test_delete_unauthorized_bucketitem(self):
         response = self.client.get(
             reverse(
-                'bucketitemdelete', kwargs={'bucketitemid': self.bucketitem2.id}))
+                'bucketitemdelete', kwargs={
+                    'bucketitemid': self.bucketitem2.id
+                }))
 
         self.assertEqual(response.templates[0].name, 'bucketlist/errors.html')

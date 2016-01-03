@@ -9,7 +9,6 @@ from selenium.webdriver.common.by import By
 
 
 class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
-    fixtures = ['users.json']
 
     def setUp(self):
         self.browser = webdriver.PhantomJS()
@@ -26,21 +25,15 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('myBucketlist', body.text)
 
-        # asserting a successful login
-        self.browser.find_element_by_xpath(
-            "//button[contains(text(),'Get Started')]").click()
-        block = WebDriverWait(self.browser, 60)
-        block.until(
-            EC.visibility_of_element_located(
-                (By.CLASS_NAME, 'modal')
-            )
-        )
+        # asserting a successful registration
         self.browser.find_element_by_name('username').send_keys('laddeos')
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('laddeos')
-        password_field.send_keys(Keys.RETURN)
+        v_password_field = self.browser.find_element_by_name('verify_password')
+        v_password_field.send_keys('laddeos')
+        v_password_field.send_keys(Keys.RETURN)
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Bucketlists', body.text)
+        self.assertIn('My Bucket Lists', body.text)
 
         # add a new bucketlist
         self.browser.find_element_by_id('add-list-icon').click()
@@ -58,17 +51,10 @@ class BucketAppFunctionalityTestCase(StaticLiveServerTestCase):
         self.assertIn('A new bucketlist', body.text)
 
         # add a new bucketitem
-        self.browser.find_element_by_id('add-item-icon').click()
-        block = WebDriverWait(self.browser, 60)
-        block.until(
-            EC.visibility_of_element_located(
-                (By.CLASS_NAME, 'modal')
-            )
-        )
-        self.browser.find_element_by_name(
-            'name').send_keys('A new bucketitem')
-        self.browser.find_element_by_xpath(
-            "//button[contains(text(),'Add')]").click()
+        self.browser.find_element_by_id(
+            'bucketitem-input').send_keys('A new bucketitem')
+        self.browser.find_element_by_class_name(
+            'add-item-btn').click()
         body = self.browser.find_element_by_tag_name('body')
         self.assertIn('A new bucketitem', body.text)
 

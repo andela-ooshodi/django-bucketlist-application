@@ -28,5 +28,3 @@ deploy:
   run:
     - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
     - "python djangobucketlist/manage.py collectstatic --noinput"
-    - "python djangobucketlist/manage.py makemigrations"
-    - "python djangobucketlist/manage.py migrate"

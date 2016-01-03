@@ -15,6 +15,7 @@ class Base(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['-date_modified']
 
 
 class BucketList(Base):
@@ -30,3 +31,4 @@ class BucketlistItem(Base):
 
     class Meta(Base.Meta):
         db_table = 'bucketitem'
+        ordering = ['done', '-date_modified']

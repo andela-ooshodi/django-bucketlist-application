@@ -1,148 +1,239 @@
 body {
-  background-color: #F5F5F5;
-  font-family: 'Lato', sans-serif;
+    background-color: #F5F5F5;
+    font-family: 'Lato', sans-serif;
+    height: 100%;
 }
 
 body .row {
-  margin: auto;
+    margin: auto;
 }
 
 .btn-default {
-  background-color: #163550;
-  color: #fff;
+    background-color: #163550;
+    color: #fff !important;
+}
+
+.btn:focus {
+    background-color: #163550 !important;
 }
 
 i {
-  color: #163550;
+    color: #163550;
 }
 
-/* index pade styling */
-.centered {
-  margin-top: 7%;
-  color: #163550;
+hr {
+    margin: 7px 0px;
+}
+
+.empty {
+    background-color: #163550 !important;
+    color: #fff !important;
+}
+
+.empty i {
+    color: #fff;
+}
+
+
+/* index page styling */
+
+#logo {
+    font-size: 200px;
+    text-align: center;
+    display: block;
+    margin-top: 20%;
 }
 
 #title {
-  margin-top: 0px;
-  margin-bottom: 50px;
-  font-size: 70px;
-  font-weight: 300;
-  letter-spacing: -2px;
+    font-size: 70px;
+    font-weight: 300;
+    letter-spacing: -2px;
+    text-align: center;
 }
 
-#logo {
-  font-size: 200px;
-  opacity: 0.8;
+.registration-form {
+    margin-top: 7%;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 30px 50px;
 }
 
-#get-started {
-  margin-bottom: 10px;
-  color: #163550;
-  background-color: #fff;
+.registration-form .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
-#login {
-  color: #fff;
-  background-color: #163550;
+.registration-form .form-group label.control-label {
+    font-weight: bold;
+    color: #333;
 }
 
-/* modal styling */
-.modal-content {
-  color: #163550;
+.registration-form legend {
+    margin-bottom: 0px;
 }
 
-/* home page content styling */
-.header {
-  border-bottom: 1px solid #efefef;
-  padding-bottom: 20px;
+.login-form {
+    display: none;
+    margin-top: 20%;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 30px 50px;
 }
 
-.breadcrumb {
-  margin: 0px 0px 10px 0px;
+.login-form .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.login-form .form-group label.control-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.login-form legend {
+    margin-bottom: 0px;
+}
+
+#login-link, #registration-link {
+    cursor: pointer;
+}
+
+#flash-message {
+    margin-top: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    top: 100%;
+}
+
+.footer a, .footer a:hover, .footer a:focus {
+    color: #333;
+}
+
+
+/* home page styling */
+
+.navbar.navbar-inverse {
+    background-color: #fff;
+    color: #333;
+}
+
+#nav-text {
+    padding: 20px 0px;
 }
 
 .page-title {
-  font-size: 2.0em;
-  color: #163550;
-  font-weight: 300;
+    font-size: 2.0em;
+    color: #163550;
+    font-weight: 300;
 }
 
 .page-sub-title {
-  font-size: 1.5em;
-  margin-bottom: 15px;
+    font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
-.content {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 20px 0px;
-  color: #163550;
+.form-group label.control-label {
+    color: #333;
+    font-weight: bold;
 }
 
-.content .row {
-  margin: 0px 20px;
-  overflow: hidden;
-}
-.buckets a, .breadcrumb a {
-  color: #163550;
-}
-
-#name {
-  display: inline-block;
-  color: #163550;
-  font-size: 50px;
-}
-
-#logout {
-  margin-top: 20px;
+@media (max-width: 1199px) {
+    #nav-text {
+        padding: 15px 0px 15px 15px;
+    }
 }
 
 
-.list-group {
-  margin-bottom: 0px;
+/* bucketlists styling */
+
+.bucket {
+    position: relative;
 }
 
-.list-group-item {
-  background-color: #F5F5F5;
-  border: none;
+.bucketlist-title {
+    display: inline-block;
+    cursor: default;
 }
 
-.list-group-item:hover {
-  background-color: #fff
+.bucketlist-title:hover .edit-list {
+    display: inline-block;
 }
 
-.buckets {
-  overflow: auto;
-  margin-top: 10px;
+.edit-list {
+    display: none;
 }
 
-.edit {
-  margin: 5px 7px 0px;
-  font-size : 15px;
+.delete-list {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }
 
-input[type="checkbox"] {
-    margin: 5px 10px 0px;
-}
-
-#delete-item, #delete-list {
-  padding: 0px;
-  font-size : 15px;
+.modal-delete-btn {
+    margin-top: 0px;
 }
 
 .pagination {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
-#loader {
-  display: none;
+
+/* bucketitems element styling */
+
+.item-checkbox {
+    margin-right: 10px;
 }
+
+.edit-item {
+    display: none;
+    margin-left: 10px;
+}
+
+.delete-item {
+    display: none;
+}
+
+.bucketitem-name {
+    cursor: default;
+    display: inline-block;
+    width: 91%;
+}
+
+.list-group-item:hover {
+    background-color: #eee
+}
+
+.bucketitem-name:hover .edit-item, .bucketitem-name:hover .delete-item {
+    display: inline-block;
+}
+
+.add-item-btn {
+    background-color: #163550 !important;
+}
+
+.btn.btn-fab, .input-group-btn .btn.btn-fab {
+    height: 45px;
+    min-width: 45px;
+    width: 45px;
+}
+
+.add-item-icon {
+    color: #fff;
+}
+
+.bucketitem-form {
+    margin-top: 20px;
+}
+
 
 /* error page */
+
 #error-header {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }

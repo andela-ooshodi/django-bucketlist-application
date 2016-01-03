@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class LoginForm(forms.Form):
@@ -13,16 +14,18 @@ class LoginForm(forms.Form):
         label='Password', max_length=100,
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': '*****'
+                'placeholder': '**********'
             }))
 
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(
         label='Username', max_length=300,
+        validators=[RegexValidator(
+            r'^[0-9a-zA-Z_]*$')],
         widget=forms.TextInput(
             attrs={
-              'placeholder': 'Create that unique username you love',
+                'placeholder': 'Create that unique username you love',
                 'autocomplete': 'off'
             }))
     password = forms.CharField(

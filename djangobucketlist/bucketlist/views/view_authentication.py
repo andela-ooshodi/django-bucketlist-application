@@ -37,17 +37,17 @@ class LoginView(IndexView):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    messages.add_message(
-                        request, messages.SUCCESS, 'Welcome Back!!')
+                    messages.success(
+                        request, 'Welcome Back!!')
                     return redirect(
                         '/bucketlist',
                         context_instance=RequestContext(request)
                     )
             else:
-                messages.add_message(
-                    request, messages.ERROR, 'Incorrect username or password!')
+                messages.error(
+                    request, 'Incorrect username or password!')
                 return redirect(
-                    '/',
+                    '/login',
                     context_instance=RequestContext(request)
                 )
         else:
@@ -67,16 +67,16 @@ class RegistrationView(IndexView):
                 username=request.POST['username'],
                 password=request.POST['password'])
             login(request, new_user)
-            messages.add_message(
-                request, messages.SUCCESS, 'Registration successful!!')
+            messages.success(
+                request, 'Registration successful!!')
             return redirect(
                 '/bucketlist',
                 context_instance=RequestContext(request)
             )
         else:
-            messages.add_message(
-                request, messages.ERROR, 'Error at registration!')
+            messages.error(
+                request, 'Error at registration!')
             return redirect(
-                '/',
+                '/register',
                 context_instance=RequestContext(request)
             )

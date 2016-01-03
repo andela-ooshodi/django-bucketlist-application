@@ -25,6 +25,3 @@ deploy:
   app: mybucketlist-staging
   on:
     repo: andela-ooshodi/django-bucketlist-application
-  run:
-    - "export DJANGO_SETTINGS_MODULE=djangobucketlist.settings.production"
-    - "python djangobucketlist/manage.py collectstatic --noinput"

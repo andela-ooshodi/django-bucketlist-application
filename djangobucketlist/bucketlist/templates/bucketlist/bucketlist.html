@@ -80,7 +80,12 @@
                                 <div class="modal-body">
                                     <form role="form" action="{% url 'bucketlistedit' bucket.id %}" method="post">
                                         {% csrf_token %}
-                                        {{ bucketlistform|bootstrap }}
+                                        <div class="form-group">
+                                            <label class="control-label" for="id_name">Name</label>
+                                            <div class=" ">
+                                                <input class="form-control" id="id_name" maxlength="200" name="name" value="{{ bucket.name }}" type="text">
+                                            </div>
+                                        </div>
                                         <button type="submit" class="btn btn-default">Change</button>
                                     </form>
                                 </div>
@@ -127,7 +132,12 @@
                                         <div class="modal-body">
                                             <form role="form" action="{% url 'bucketitemedit' bucketitem.id %}" method="post">
                                                 {% csrf_token %}
-                                                {{ bucketitemform|bootstrap }}
+                                                <div class="form-group">
+                                                    <label class="control-label" for="id_name">Name</label>
+                                                    <div class=" ">
+                                                        <input class="form-control" id="id_name" maxlength="200" name="name" value="{{ bucketitem.name }}" type="text">
+                                                    </div>
+                                                </div>
                                                 <button type="submit" class="btn btn-default">Change</button>
                                             </form>
                                         </div>

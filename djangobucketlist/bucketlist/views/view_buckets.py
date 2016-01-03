@@ -58,6 +58,7 @@ class BucketListView(LoginRequiredMixin, PaginationMixin, TemplateView):
         context = super(BucketListView, self).get_context_data(**kwargs)
         context['username'] = self.request.user.username
         context['bucketlistform'] = BucketListForm()
+        context['bucketitemform'] = BucketlistItemForm()
         context['buckets'] = buckets
 
         return context
@@ -129,47 +130,11 @@ class BucketListDeleteView(LoginRequiredMixin, View):
         )
 
 
-class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
+class BucketItemView(LoginRequiredMixin, TemplateView):
 
     """
-    view for lisitng and creating bucketitems
+    view for creating bucketitems
     """
-
-    template_name = 'bucketlist/bucketitem.html'
-    form_class = BucketlistItemForm
-
-    def get_context_data(self, **kwargs):
-        try:
-            bucketitems_all = BucketlistItem.objects.filter(
-                bucketlist_id=kwargs['bucketlistid']).order_by(
-                'done', '-date_modified',
-            )
-            # limit the number of bucketitems per page to 10
-            paginator = Paginator(bucketitems_all, 10)
-            try:
-                bucketitems = paginator.page(self.page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                bucketitems = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range, deliver last page
-                bucketitems = paginator.page(paginator.num_pages)
-
-            # get context
-            context = super(BucketItemView, self).get_context_data(**kwargs)
-            # get the name of the bucketlist and check if it belongs to logged
-            # in user
-            context['name'] = BucketList.objects.filter(
-                id=kwargs['bucketlistid'],
-                author_id=self.request.user.id)[0].name
-            context['bucketitems'] = bucketitems
-            context['bucketitemform'] = BucketlistItemForm()
-            context['bucketlistid'] = kwargs['bucketlistid']
-        except IndexError:
-            # returns error if trying to access bucketitems not owned
-            self.template_name = 'bucketlist/errors.html'
-
-        return context
 
     def post(self, request, **kwargs):
         bucketitem_name = request.POST.get('name')
@@ -190,7 +155,7 @@ class BucketItemView(LoginRequiredMixin, PaginationMixin, TemplateView):
         messages.success(
             request, 'Successfully added an item!')
         return redirect(
-            '/bucketlist/{}/bucketitems'.format(kwargs['bucketlistid']),
+            '/bucketlist',
             context_instance=RequestContext(request)
         )
 

@@ -1,5 +1,5 @@
 body {
-    background-color: #F5F5F5; 
+    background-color: #F5F5F5;
     font-family: 'Lato', sans-serif;
     height: 100%;
 }
@@ -34,7 +34,9 @@ hr {
     color: #fff;
 }
 
+
 /* index page styling */
+
 #logo {
     font-size: 200px;
     text-align: center;
@@ -111,7 +113,9 @@ hr {
     color: #333;
 }
 
+
 /* home page styling */
+
 .navbar.navbar-inverse {
     background-color: #fff;
     color: #333;
@@ -122,14 +126,14 @@ hr {
 }
 
 .page-title {
-  font-size: 2.0em;
-  color: #163550;
-  font-weight: 300;
+    font-size: 2.0em;
+    color: #163550;
+    font-weight: 300;
 }
 
 .page-sub-title {
-  font-size: 1.5em;
-  margin-bottom: 15px;
+    font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
 .form-group label.control-label {
@@ -143,7 +147,9 @@ hr {
     }
 }
 
+
 /* bucketlists styling */
+
 .bucket {
     position: relative;
 }
@@ -173,11 +179,13 @@ hr {
 }
 
 .pagination {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
+
 /* bucketitems element styling */
+
 .item-checkbox {
     margin-right: 10px;
 }
@@ -201,120 +209,31 @@ hr {
     background-color: #eee
 }
 
-.bucketitem-name:hover .edit-item, .bucketitem-name:hover .delete-item  {
+.bucketitem-name:hover .edit-item, .bucketitem-name:hover .delete-item {
     display: inline-block;
 }
 
+.add-item-btn {
+    background-color: #163550 !important;
+}
+
+.btn.btn-fab, .input-group-btn .btn.btn-fab {
+    height: 45px;
+    min-width: 45px;
+    width: 45px;
+}
+
+.add-item-icon {
+    color: #fff;
+}
+
+.bucketitem-form {
+    margin-top: 20px;
+}
+
+
 /* error page */
+
 #error-header {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
-
-
-/*
-
-#get-started {
-  margin-bottom: 10px;
-  color: #163550;
-  background-color: #fff;
-}
-
-#login {
-  color: #fff;
-  background-color: #163550;
-}*/
-
-
-/* modal styling */
-
-
-/*.modal-content {
-  color: #163550;
-}
-*/
-
-
-/* home page content styling */
-
-
-/*.header {
-  border-bottom: 1px solid #efefef;
-  padding-bottom: 20px;
-}
-
-.breadcrumb {
-  margin: 0px 0px 10px 0px;
-}
-
-
-
-
-
-.content {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 20px 0px;
-  color: #163550;
-}
-
-.content .row {
-  margin: 0px 20px;
-  overflow: hidden;
-}
-.buckets a, .breadcrumb a {
-  color: #163550;
-}
-
-#name {
-  display: inline-block;
-  color: #163550;
-  font-size: 50px;
-}
-
-#logout {
-  margin-top: 20px;
-}
-
-
-.list-group {
-  margin-bottom: 0px;
-}
-
-.list-group-item {
-  background-color: #F5F5F5;
-  border: none;
-}
-
-.list-group-item:hover {
-  background-color: #fff
-}
-
-.buckets {
-  overflow: auto;
-  margin-top: 10px;
-}
-
-.edit {
-  margin: 5px 7px 0px;
-  font-size : 15px;
-}
-
-input[type="checkbox"] {
-    margin: 5px 10px 0px;
-}
-
-#delete-item, #delete-list {
-  padding: 0px;
-  font-size : 15px;
-}
-
-
-
-#loader {
-  display: none;
-}*/
-
-

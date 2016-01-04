@@ -113,7 +113,17 @@ hr {
     color: #333;
 }
 
-
+@media (min-width: 1440px) {
+    #logo {
+        margin-top: 45%;
+    }
+    .login-form {
+        margin-top: 50%;
+    }
+    .registration-form {
+        margin-top: 40%;
+    }
+}
 /* home page styling */
 
 .navbar.navbar-inverse {

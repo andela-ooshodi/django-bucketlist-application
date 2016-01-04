@@ -129,6 +129,7 @@ hr {
     font-size: 2.0em;
     color: #163550;
     font-weight: 300;
+    padding-left: 25px;
 }
 
 .page-sub-title {
@@ -187,7 +188,7 @@ hr {
 /* bucketitems element styling */
 
 .item-checkbox {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .edit-item {
@@ -231,6 +232,10 @@ hr {
     margin-top: 20px;
 }
 
+.bucketlistitems {
+    height: 150px;
+    overflow: auto;
+}
 
 /* error page */
 

@@ -5,12 +5,11 @@ env:
 - DJANGO_SETTINGS_MODULE=djangobucketlist.settings.test
 install:
 - pip install --upgrade pip
-- pip install --upgrade virtualenv
 - pip install -r requirements.txt
 - pip install coveralls
 - npm install bower
 script:
-- bower install --settings=djangobucketlist.settings.test
+- bower install
 - python djangobucketlist/manage.py collectstatic --noinput --settings=djangobucketlist.settings.test
 - coverage run djangobucketlist/manage.py test
 after_success:
